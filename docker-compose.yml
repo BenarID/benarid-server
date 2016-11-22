@@ -1,0 +1,24 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: mix
+    environment:
+      - MIX_ENV=dev
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_NAME=benarid
+    volumes:
+      - .:/app
+    links:
+      - db
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=benarid
+    ports:
+      - "${DB_PORT}:5432"
