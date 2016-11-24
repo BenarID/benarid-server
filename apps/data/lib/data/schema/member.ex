@@ -1,6 +1,8 @@
 defmodule Data.Schema.Member do
-  use Ecto.Schema
+  @moduledoc false
   
+  use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "members" do

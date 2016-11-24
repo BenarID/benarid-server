@@ -1,4 +1,9 @@
 defmodule Data do
+  @moduledoc """
+  Application for interfacing to BenarID database. Contains all the
+  business logic for manipulating data.
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html

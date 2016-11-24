@@ -1,4 +1,8 @@
 defmodule API do
+  @moduledoc """
+  API interface for BenarID.
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
