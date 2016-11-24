@@ -21,7 +21,7 @@ defmodule API.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {API, []},
-     applications: [:phoenix, :cowboy, :logger]]
+     applications: [:phoenix, :cowboy, :logger, :data]]
   end
 
   # Specifies which paths to compile per environment.
@@ -32,7 +32,8 @@ defmodule API.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.1"},
+    [{:data, in_umbrella: true},
+     {:phoenix, "~> 1.2.1"},
      {:cowboy, "~> 1.0"}]
   end
 end
