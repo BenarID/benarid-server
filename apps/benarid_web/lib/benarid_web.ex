@@ -1,6 +1,6 @@
 defmodule BenarIDWeb do
   @moduledoc """
-  BenarIDWeb interface for BenarID.
+  Web interface for BenarID.
   """
 
   use Application
