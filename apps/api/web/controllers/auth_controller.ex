@@ -1,5 +1,5 @@
-defmodule AuthProvider.AuthController do
-  use AuthProvider.Web, :controller
+defmodule API.AuthController do
+  use API.Web, :controller
 
   plug Ueberauth
 
