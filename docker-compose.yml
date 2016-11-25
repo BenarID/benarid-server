@@ -6,7 +6,6 @@ services:
       dockerfile: Dockerfile.dev
     command: mix
     environment:
-      - MIX_ENV=dev
       - PORT=${PORT}
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
