@@ -1,13 +1,15 @@
 defmodule AuthProvider.Router do
   use AuthProvider.Web, :router
 
-  pipeline :auth_provider do
-    plug :accepts, ["json"]
+  pipeline :browser do
+    plug :accepts, ["html"]
   end
 
-  scope "/", AuthProvider do
-    pipe_through :auth_provider
+  scope "/auth", AuthProvider do
+    pipe_through :browser
 
-    get "/", IndexController, :index
+    get "/retrieve", AuthController, :retrieve
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 end
