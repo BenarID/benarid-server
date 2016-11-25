@@ -1,7 +1,8 @@
 use Mix.Config
 
 config :benarid_web,
-  namespace: BenarIDWeb
+  namespace: BenarIDWeb,
+  ecto_repos: []
 
 # Configures the endpoint
 config :benarid_web, BenarIDWeb.Endpoint,
