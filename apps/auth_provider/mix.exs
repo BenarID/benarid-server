@@ -21,7 +21,8 @@ defmodule AuthProvider.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {AuthProvider, []},
-     applications: [:phoenix, :cowboy, :logger, :data]]
+     applications: [:phoenix, :cowboy, :logger, :data,
+                    :ueberauth_google]]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,6 +35,7 @@ defmodule AuthProvider.Mixfile do
   defp deps do
     [{:data, in_umbrella: true},
      {:phoenix, "~> 1.2.1"},
+     {:ueberauth_google, "~> 0.4"},
      {:cowboy, "~> 1.0"}]
   end
 end
