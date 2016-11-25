@@ -1,4 +1,4 @@
-defmodule Data.Auth do
+defmodule Data.Member do
   @moduledoc """
   Module for authentication.
 
@@ -9,20 +9,10 @@ defmodule Data.Auth do
   alias Data.Repo
   alias Data.Schema.Member
 
-  def get_member_by(:email, email) do
+  def find(opts) do
+    email = Keyword.get(opts, :email)
     query = from m in Member, where: m.email == ^email
-    query_member(query)
-  end
-  def get_member_by(:name, name) do
-    query = from m in Member, where: m.name == ^name
-    query_member(query)
-  end
-  def get_member_by(:id, id) do
-    query = from m in Member, where: m.id == ^id
-    query_member(query)
-  end
 
-  defp query_member(query) do
     case Repo.one(query) do
       nil ->
         :not_found
@@ -31,7 +21,7 @@ defmodule Data.Auth do
     end
   end
 
-  def register_member(data) do
+  def register(data) do
     changeset = Member.changeset(%Member{}, data)
 
     case Repo.insert(changeset) do

@@ -3,7 +3,7 @@ defmodule AuthProvider.AuthController do
 
   plug Ueberauth
 
-  alias Data.Auth
+  alias Data.Member
 
   @doc """
   Callback for failed authentication.
@@ -18,9 +18,9 @@ defmodule AuthProvider.AuthController do
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     member_data = user_from_auth(auth)
 
-    member = case Auth.get_member_by(:email, member_data.email) do
+    member = case Member.find(email: member_data.email) do
       :not_found ->
-        {:ok, member} = Auth.register_member(member_data)
+        {:ok, member} = Member.register(member_data)
         member
       {:found, member} ->
         member
