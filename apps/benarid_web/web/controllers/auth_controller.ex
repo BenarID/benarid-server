@@ -1,5 +1,5 @@
-defmodule API.AuthController do
-  use API.Web, :controller
+defmodule BenarIDWeb.AuthController do
+  use BenarIDWeb.Web, :controller
 
   plug Ueberauth
 
@@ -26,7 +26,7 @@ defmodule API.AuthController do
         member
     end
 
-    token = Phoenix.Token.sign(API.Endpoint, "member", member.id)
+    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", member.id)
 
     redirect conn, to: "/auth/retrieve#token=#{token}"
   end

@@ -1,5 +1,5 @@
-defmodule API.IndexController do
-  use API.Web, :controller
+defmodule BenarIDWeb.IndexController do
+  use BenarIDWeb.Web, :controller
 
   def index(conn, _params) do
     json conn, %{"hello" => "world"}

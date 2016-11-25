@@ -2,7 +2,7 @@ use Mix.Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
-config :api, API.Endpoint,
+config :benarid_web, BenarIDWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

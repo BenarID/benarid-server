@@ -1,4 +1,4 @@
-defmodule API.ConnCase do
+defmodule BenarIDWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,10 +20,10 @@ defmodule API.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      import API.Router.Helpers
+      import BenarIDWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint API.Endpoint
+      @endpoint BenarIDWeb.Endpoint
     end
   end
 

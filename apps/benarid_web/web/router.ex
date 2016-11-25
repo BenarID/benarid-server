@@ -1,5 +1,5 @@
-defmodule API.Router do
-  use API.Web, :router
+defmodule BenarIDWeb.Router do
+  use BenarIDWeb.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -9,13 +9,13 @@ defmodule API.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", API do
+  scope "/api", BenarIDWeb do
     pipe_through :api
 
     get "/", IndexController, :index
   end
 
-  scope "/auth", API do
+  scope "/auth", BenarIDWeb do
     pipe_through :browser
 
     get "/retrieve", AuthController, :retrieve

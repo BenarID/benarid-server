@@ -1,13 +1,13 @@
 use Mix.Config
 
-config :api,
-  namespace: API
+config :benarid_web,
+  namespace: BenarIDWeb
 
 # Configures the endpoint
-config :api, API.Endpoint,
-  http: [port: System.get_env("API_PORT") || "${API_PORT}"],
+config :benarid_web, BenarIDWeb.Endpoint,
+  http: [port: System.get_env("PORT") || "${PORT}"],
   secret_key_base: "yyJ3wSbnU9Z+t7zhD0o5L2mCXj7aJABNWkFQb3q4u1wYYZrByBbtO0GhJKIyfShZ",
-  render_errors: [view: API.ErrorView, accepts: ~w(json)]
+  render_errors: [view: BenarIDWeb.ErrorView, accepts: ~w(json)]
 
 # Tell phoenix to serve all endpoints
 config :phoenix, :serve_endpoints, true
