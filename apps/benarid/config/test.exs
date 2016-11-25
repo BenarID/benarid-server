@@ -1,4 +1,4 @@
 use Mix.Config
 
-config :data, Data.Repo,
+config :benarid, BenarID.Repo,
   pool: Ecto.Adapters.SQL.Sandbox

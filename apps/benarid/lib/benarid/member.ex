@@ -1,4 +1,4 @@
-defmodule Data.Member do
+defmodule BenarID.Member do
   @moduledoc """
   Module for authentication.
 
@@ -6,8 +6,8 @@ defmodule Data.Member do
   """
   import Ecto.Query
 
-  alias Data.Repo
-  alias Data.Schema.Member
+  alias BenarID.Repo
+  alias BenarID.Schema.Member
 
   def find(opts) do
     email = Keyword.get(opts, :email)

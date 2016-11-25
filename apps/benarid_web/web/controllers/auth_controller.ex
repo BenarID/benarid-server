@@ -3,7 +3,7 @@ defmodule BenarIDWeb.AuthController do
 
   plug Ueberauth
 
-  alias Data.Member
+  alias BenarID.Member
 
   @doc """
   Callback for failed authentication.

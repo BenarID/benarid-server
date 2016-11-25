@@ -1,4 +1,4 @@
-defmodule Data.Repo.Migrations.CreateMember do
+defmodule BenarID.Repo.Migrations.CreateMember do
   use Ecto.Migration
 
   def change do

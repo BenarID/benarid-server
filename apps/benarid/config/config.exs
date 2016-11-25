@@ -1,12 +1,12 @@
 use Mix.Config
 
-config :data, :console,
+config :benarid, :console,
   format: "$time $metadata[$level] $message\n"
 
-config :data,
-  ecto_repos: [Data.Repo]
+config :benarid,
+  ecto_repos: [BenarID.Repo]
 
-config :data, Data.Repo,
+config :benarid, BenarID.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: System.get_env("DB_USERNAME") || "${DB_USERNAME}",
   password: System.get_env("DB_PASSWORD") || "${DB_PASSWORD}",

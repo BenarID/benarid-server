@@ -1,4 +1,4 @@
-defmodule BenarID.Mixfile do
+defmodule BenarIDPlatform.Mixfile do
   use Mix.Project
 
   def project do

@@ -1,4 +1,4 @@
-defmodule Data do
+defmodule BenarID do
   @moduledoc """
   Application for interfacing to BenarID database. Contains all the
   business logic for manipulating data.
@@ -13,12 +13,12 @@ defmodule Data do
 
     # Define workers and child supervisors to be supervised
     children = [
-      worker(Data.Repo, []),
+      worker(BenarID.Repo, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Data.Supervisor]
+    opts = [strategy: :one_for_one, name: BenarID.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

@@ -21,7 +21,7 @@ defmodule BenarIDWeb.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {BenarIDWeb, []},
-     applications: [:phoenix, :cowboy, :logger, :data,
+     applications: [:phoenix, :cowboy, :logger, :benarid,
                     :ueberauth_google]]
   end
 
@@ -33,7 +33,7 @@ defmodule BenarIDWeb.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:data, in_umbrella: true},
+    [{:benarid, in_umbrella: true},
      {:phoenix, "~> 1.2.1"},
      {:ueberauth_google, "~> 0.4"},
      {:cowboy, "~> 1.0"}]

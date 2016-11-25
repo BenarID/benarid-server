@@ -1,4 +1,4 @@
-defmodule Data.Schema.Member do
+defmodule BenarID.Schema.Member do
   @moduledoc false
   
   use Ecto.Schema

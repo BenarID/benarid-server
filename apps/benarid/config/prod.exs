@@ -1,4 +1,4 @@
 use Mix.Config
 
-config :data, Data.Repo,
+config :benarid, BenarID.Repo,
   pool_size: 20

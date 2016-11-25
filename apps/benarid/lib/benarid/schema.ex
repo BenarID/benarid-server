@@ -1,7 +1,7 @@
-defmodule Data.Schema do
+defmodule BenarID.Schema do
   @moduledoc """
   Ecto schema definitions. Available schemas:
 
-    * `Data.Schema.Member`
+    * `BenarID.Schema.Member`
   """
 end

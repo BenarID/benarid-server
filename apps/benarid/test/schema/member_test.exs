@@ -1,7 +1,7 @@
 defmodule MemberSchemaTest do
   use ExUnit.Case
 
-  alias Data.Schema.Member
+  alias BenarID.Schema.Member
 
   @valid_attrs %{name: "Foo Bar", email: "email@example.com"}
   @invalid_attrs %{}

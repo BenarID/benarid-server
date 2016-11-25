@@ -2,5 +2,5 @@ use Mix.Config
 
 config :logger, :console, format: "[$level] $message\n"
 
-config :data, Data.Repo,
+config :benarid, BenarID.Repo,
   pool_size: 10

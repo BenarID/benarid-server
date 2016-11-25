@@ -1,4 +1,4 @@
-# Data
+# BenarID
 
 **TODO: Add description**
 
@@ -10,7 +10,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-      [{:data, "~> 0.1.0"}]
+      [{:benarid, "~> 0.1.0"}]
     end
     ```
 
@@ -18,7 +18,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def application do
-      [applications: [:data]]
+      [applications: [:benarid]]
     end
     ```
 
