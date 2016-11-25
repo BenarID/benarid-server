@@ -8,12 +8,14 @@ services:
     environment:
       - MIX_ENV=dev
       - API_PORT=${API_PORT}
+      - AUTH_PROVIDER_PORT=${AUTH_PROVIDER_PORT}
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
       - DB_HOST=db
       - DB_NAME=benarid
     ports:
       - "${API_PORT}:4000"
+      - "${AUTH_PROVIDER_PORT}:5000"
     volumes:
       - .:/app
     links:
