@@ -13,6 +13,8 @@ services:
       - DB_PASSWORD=password
       - DB_HOST=db
       - DB_NAME=benarid
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
     ports:
       - "${API_PORT}:4000"
       - "${AUTH_PROVIDER_PORT}:5000"
