@@ -42,6 +42,15 @@ defmodule BenarIDWeb.AuthController do
     """
   end
 
+  @doc """
+  Handler for failed authentication.
+  """
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> json(%{unauthenticated: true})
+  end
+
   defp user_from_auth(auth) do
     %{
       name: extract_name(auth),

@@ -35,6 +35,8 @@ defmodule BenarIDWeb.Mixfile do
   defp deps do
     [{:benarid, in_umbrella: true},
      {:phoenix, "~> 1.2.1"},
+     # TODO: use from hex
+     {:phoenix_token_plug, path: "../../../../phoenix_token_plug"},
      {:ueberauth_google, "~> 0.4"},
      {:cowboy, "~> 1.0"}]
   end
