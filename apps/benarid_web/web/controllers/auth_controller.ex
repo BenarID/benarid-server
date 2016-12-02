@@ -26,7 +26,7 @@ defmodule BenarIDWeb.AuthController do
         member
     end
 
-    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", member.id)
+    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", %{id: member.id})
 
     redirect conn, to: "/auth/retrieve#token=#{token}"
   end
@@ -61,17 +61,7 @@ defmodule BenarIDWeb.AuthController do
   end
 
   defp extract_name(auth) do
-    if auth.info.name do
-      auth.info.name
-    else
-      name = [auth.info.first_name, auth.info.last_name]
-      |> Enum.filter(&(&1 != nil and &1 != ""))
-
-      cond do
-        length(name) == 0 -> auth.info.nickname
-        true -> Enum.join(name, " ")
-      end
-    end
+    auth.info.name
   end
 
   defp extract_email(auth) do
