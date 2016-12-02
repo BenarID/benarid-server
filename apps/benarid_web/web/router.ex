@@ -20,12 +20,16 @@ defmodule BenarIDWeb.Router do
     pipe_through :api
 
     get "/", IndexController, :index
+
+    post "/process", APIController, :process
+    get "/stats", APIController, :stats
   end
 
   scope "/api", BenarIDWeb do
     pipe_through [:api, :protected]
 
     get "/me", APIController, :me
+    post "/rate", APIController, :rate
   end
 
   scope "/auth", BenarIDWeb do

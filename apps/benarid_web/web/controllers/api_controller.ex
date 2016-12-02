@@ -8,4 +8,16 @@ defmodule BenarIDWeb.APIController do
     json conn, %{id: member.id, name: member.name}
   end
 
+  def process(conn, %{"url" => url}) do
+    json conn, %{url: url}
+  end
+
+  def stats(conn, %{"id" => id}) do
+    json conn, %{id: id}
+  end
+
+  def rate(conn, %{"id" => id}) do
+    json conn, %{id: id}
+  end
+
 end
