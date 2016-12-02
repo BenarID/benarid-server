@@ -9,10 +9,8 @@ defmodule BenarID.Member do
   alias BenarID.Repo
   alias BenarID.Schema.Member
 
-  def find(opts) do
-    email = Keyword.get(opts, :email)
+  def find_by_email(email) do
     query = from m in Member, where: m.email == ^email
-
     case Repo.one(query) do
       nil ->
         :not_found

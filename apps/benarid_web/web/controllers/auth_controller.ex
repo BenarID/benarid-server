@@ -18,7 +18,7 @@ defmodule BenarIDWeb.AuthController do
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     member_data = user_from_auth(auth)
 
-    member = case Member.find(email: member_data.email) do
+    member = case Member.find_by_email(member_data.email) do
       :not_found ->
         {:ok, member} = Member.register(member_data)
         member
