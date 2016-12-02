@@ -21,6 +21,15 @@ defmodule BenarID.Member do
     end
   end
 
+  def find_by_id(id) do
+    case Repo.get(Member, id) do
+      nil ->
+        :not_found
+      member ->
+        {:found, member}
+    end
+  end
+
   def register(data) do
     changeset = Member.changeset(%Member{}, data)
 

@@ -25,7 +25,7 @@ defmodule BenarIDWeb.Router do
   scope "/api", BenarIDWeb do
     pipe_through [:api, :protected]
 
-    # Protected routes go here
+    get "/me", APIController, :me
   end
 
   scope "/auth", BenarIDWeb do
