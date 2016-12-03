@@ -22,7 +22,7 @@ defmodule BenarIDWeb.Mixfile do
   def application do
     [mod: {BenarIDWeb, []},
      applications: [:phoenix, :cowboy, :logger, :benarid,
-                    :ueberauth_google]]
+                    :phoenix_token_plug, :ueberauth_google]]
   end
 
   # Specifies which paths to compile per environment.
@@ -35,8 +35,7 @@ defmodule BenarIDWeb.Mixfile do
   defp deps do
     [{:benarid, in_umbrella: true},
      {:phoenix, "~> 1.2.1"},
-     # TODO: use from hex
-     {:phoenix_token_plug, path: "../../../../phoenix_token_plug"},
+     {:phoenix_token_plug, "~> 0.1"},
      {:ueberauth_google, "~> 0.4"},
      {:cowboy, "~> 1.0"}]
   end
