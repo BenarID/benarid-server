@@ -7,12 +7,12 @@ defmodule BenarIDWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Phoenix.Token.Plug.VerifyHeader,
+    plug PhoenixTokenPlug.VerifyHeader,
       salt: "member"
   end
 
   pipeline :protected do
-    plug Phoenix.Token.Plug.EnsureAuthenticated,
+    plug PhoenixTokenPlug.EnsureAuthenticated,
       handler: BenarIDWeb.AuthController
   end
 
