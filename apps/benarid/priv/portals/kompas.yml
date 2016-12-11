@@ -1,0 +1,35 @@
+# Display name for the portal. Example: Detik.com
+name: Kompas.com
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: kompascom
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: http://www.kompas.com
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - news.kompas.com
+  - nasional.kompas.com
+  - regional.kompas.com
+  - megapolitan.kompas.com
+  - internasional.kompas.com
+  - olahraga.kompas.com
+  - sains.kompas.com
+  - edukasi.kompas.com
+  - bisniskeuangan.kompas.com
+  - bola.kompas.com
+  - tekno.kompas.com
+  - entertainment.kompas.com
+  - otomotif.kompas.com
+  - health.kompas.com
+  - female.kompas.com
+  - properti.kompas.com
+  - travel.kompas.com
+  - kolom.kompas.com
+  - foto.kompas.com
+  - video.kompas.com
+  - tv.kompas.com
+  - vik.kompas.com
