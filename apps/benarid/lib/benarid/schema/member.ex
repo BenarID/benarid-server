@@ -1,6 +1,6 @@
 defmodule BenarID.Schema.Member do
   @moduledoc false
-  
+
   use Ecto.Schema
 
   import Ecto.Changeset
@@ -19,5 +19,6 @@ defmodule BenarID.Schema.Member do
     struct
     |> cast(params, [:name, :email])
     |> validate_required([:name, :email])
+    |> unique_constraint(:email)
   end
 end

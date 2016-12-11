@@ -10,11 +10,15 @@ defmodule BenarID.Repo.Migrations.CreatePortals do
       timestamps()
     end
 
+    create unique_index(:portals, [:slug])
+
     create table(:portal_hosts) do
       add :portal_id, references(:portals)
       add :hostname, :string
-      
+
       timestamps()
     end
+
+    create unique_index(:portal_hosts, [:hostname])
   end
 end

@@ -8,5 +8,7 @@ defmodule BenarID.Repo.Migrations.CreateMember do
 
       timestamps()
     end
+
+    create unique_index(:members, [:email])
   end
 end

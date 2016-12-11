@@ -22,5 +22,6 @@ defmodule BenarID.Schema.Portal do
     struct
     |> cast(params, [:slug, :name, :site_url])
     |> validate_required([:slug, :name, :site_url])
+    |> unique_constraint(:slug)
   end
 end

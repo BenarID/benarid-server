@@ -20,6 +20,6 @@ defmodule BenarID.Schema.PortalHost do
     struct
     |> cast(params, [:hostname, :portal_id])
     |> validate_required([:hostname, :portal_id])
-    |> assoc_constraint(:portal)
+    |> unique_constraint(:hostname)
   end
 end
