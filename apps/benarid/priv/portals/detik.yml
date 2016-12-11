@@ -1,0 +1,23 @@
+# Display name for the portal. Example: Detik.com
+name: Detik.com
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: detikcom
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: http://www.detik.com
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - news.detik.com
+  - finance.detik.com
+  - hot.detik.com
+  - inet.detik.com
+  - sport.detik.com
+  - oto.detik.com
+  - travel.detik.com
+  - food.detik.com
+  - health.detik.com
+  - x.detik.com
