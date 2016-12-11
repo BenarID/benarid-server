@@ -1,7 +1,10 @@
 defmodule BenarIDWeb.APIController do
   use BenarIDWeb.Web, :controller
 
-  alias BenarID.Member
+  alias BenarID.{
+    Member,
+    Article,
+  }
 
   def me(conn, _params) do
     {:found, member} = Member.find_by_id(conn.assigns.user.id)
@@ -9,7 +12,12 @@ defmodule BenarIDWeb.APIController do
   end
 
   def process(conn, %{"url" => url}) do
-    json conn, %{url: url}
+    case Article.process(url) do
+      {:error, :not_found} ->
+        json conn, %{not_found: true}
+      {:ok, id} ->
+        json conn, %{id: id}
+    end
   end
 
   def stats(conn, %{"id" => id}) do
