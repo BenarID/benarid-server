@@ -18,7 +18,7 @@ defmodule BenarID.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :ecto, :postgrex],
+    [applications: [:logger, :ecto, :postgrex, :yaml_elixir],
      mod: {BenarID, []}]
   end
 
@@ -37,6 +37,7 @@ defmodule BenarID.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:ecto, "~> 2.0"},
-     {:postgrex, "~> 0.11"}]
+     {:postgrex, "~> 0.11"},
+     {:yaml_elixir, "~> 1.2"}]
   end
 end
