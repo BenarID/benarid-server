@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Benarid.Portal.Create do
+defmodule Mix.Tasks.Benarid.Portal.Migrate do
   use Mix.Task
 
   @shortdoc "Inserts portal definition(s) to DB"
@@ -13,22 +13,23 @@ defmodule Mix.Tasks.Benarid.Portal.Create do
       mix benarid.portal.create --all
   """
 
-  import Mix.BenarID
-
   alias BenarID.Portal
 
   @switches [:all]
 
   def run(args) do
-    no_umbrella!("benarid.portal.create")
-
-    Mix.Task.run "app.start"
+    {:ok, _} = Application.ensure_all_started(:benarid)
     Logger.configure level: :warn
 
-    path = Path.absname "priv/portals"
+    path = if Mix.Project.umbrella? do
+      "apps/benarid/priv/portals"
+    else
+      "priv/portals"
+    end
+    
     case OptionParser.parse(args, switches: @switches) do
       {[], [], _} ->
-        Mix.raise "expected benarid.portal.create to receive the file name or --all flag."
+        Mix.raise "expected benarid.portal.migrate to receive the file name or --all flag."
       {[all: true], _, _} ->
         {:ok, files} = File.ls path
         for name <- files do
@@ -51,7 +52,7 @@ defmodule Mix.Tasks.Benarid.Portal.Create do
     hosts = data["hosts"]
     {:ok, portal} = Portal.create_portal(portal_data)
     Portal.populate_hosts(portal, hosts)
-    Mix.shell.info "Successfully created portal #{portal.name}."
+    Mix.shell.info "Successfully migrated portal #{portal.name}."
   end
 
   defp parse_file(file) do

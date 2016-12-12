@@ -32,7 +32,7 @@ defmodule Mix.Tasks.Benarid.Gen.Portal do
         Use the comments to help you fill in the details.
         When you're done, run it with:
 
-            $ mix benarid.portal.create #{name}
+            $ mix benarid.portal.migrate #{name}
         """
     end
   end
