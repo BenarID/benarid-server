@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Benarid.Portal.Migrate do
+defmodule Mix.Tasks.Benarid.Portal.Sync do
   use Mix.Task
 
   @shortdoc "Inserts portal definition(s) to DB"
@@ -6,11 +6,11 @@ defmodule Mix.Tasks.Benarid.Portal.Migrate do
   @moduledoc """
   Inserts a portal and its hosts from a definition.
 
-      mix benarid.portal.create <filename>
+      mix benarid.portal.sync <filename>
 
   If you want to insert all portals, use the `--all` flag.
 
-      mix benarid.portal.create --all
+      mix benarid.portal.sync --all
   """
 
   alias BenarID.Portal
@@ -26,10 +26,10 @@ defmodule Mix.Tasks.Benarid.Portal.Migrate do
     else
       "priv/portals"
     end
-    
+
     case OptionParser.parse(args, switches: @switches) do
       {[], [], _} ->
-        Mix.raise "expected benarid.portal.migrate to receive the file name or --all flag."
+        Mix.raise "expected benarid.portal.sync to receive the file name or --all flag."
       {[all: true], _, _} ->
         {:ok, files} = File.ls path
         for name <- files do
@@ -52,7 +52,7 @@ defmodule Mix.Tasks.Benarid.Portal.Migrate do
     hosts = data["hosts"]
     {:ok, portal} = Portal.create_portal(portal_data)
     Portal.populate_hosts(portal, hosts)
-    Mix.shell.info "Successfully migrated portal #{portal.name}."
+    Mix.shell.info "Successfully synced portal #{portal.name}."
   end
 
   defp parse_file(file) do
