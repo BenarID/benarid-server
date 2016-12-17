@@ -24,8 +24,15 @@ defmodule BenarIDWeb.APIController do
     json conn, %{id: id}
   end
 
-  def rate(conn, %{"id" => id}) do
-    json conn, %{id: id}
+  def rate(conn, %{"article_id" => article_id, "ratings" => ratings}) do
+    member_id = conn.assigns.user.id
+    ratings = ratings |> Enum.into([])
+    case Article.rate(ratings, member_id, article_id) do
+      :ok ->
+        json conn, %{ok: true}
+      _ ->
+        json conn, %{ok: false}
+    end
   end
 
 end
