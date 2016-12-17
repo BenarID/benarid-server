@@ -53,4 +53,8 @@ defmodule BenarID.Portal do
     end
   end
 
+  def clear() do
+    Repo.delete_all(Portal)
+  end
+
 end
