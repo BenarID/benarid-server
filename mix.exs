@@ -1,28 +1,47 @@
-defmodule BenarIDPlatform.Mixfile do
+defmodule BenarID.Mixfile do
   use Mix.Project
 
   def project do
-    [apps_path: "apps",
+    [app: :benarid,
+     version: "0.1.0",
+     elixir: "~> 1.3",
+     elixirc_paths: elixirc_paths(Mix.env),
+     compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     aliases: aliases,
-     deps: deps]
+     aliases: aliases(),
+     deps: deps()]
   end
 
-  # Dependencies can be Hex packages:
+  # Configuration for the OTP application.
   #
-  #   {:mydep, "~> 0.3.0"}
+  # Type `mix help compile.app` for more information.
+  def application do
+    [mod: {BenarID, []},
+     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger,
+                    :phoenix_ecto, :postgrex, :phoenix_token_plug,
+                    :ueberauth_google, :yaml_elixir]]
+  end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
+  defp elixirc_paths(_),     do: ["lib", "web"]
+
+  # Specifies your project dependencies.
   #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options.
-  #
-  # Dependencies listed here are available only for this project
-  # and cannot be accessed from applications inside the apps folder
+  # Type `mix help deps` for examples and options.
   defp deps do
-    [{:credo, "~> 0.5", only: [:dev, :test]}]
+    [{:phoenix, "~> 1.2.1"},
+     {:phoenix_pubsub, "~> 1.0"},
+     {:phoenix_ecto, "~> 3.0"},
+     {:postgrex, ">= 0.0.0"},
+     {:phoenix_token_plug, "~> 0.2"},
+     {:ueberauth_google, "~> 0.4"},
+     {:cowboy, "~> 1.0"},
+     {:yaml_elixir, "~> 1.2"},
+
+     # Dev and test dependencies
+     {:credo, "~> 0.5", only: [:dev, :test]}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
@@ -32,6 +51,8 @@ defmodule BenarIDPlatform.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["test": ["ecto.create --quiet", "ecto.migrate", "test", "ecto.drop"]]
+    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end
