@@ -21,7 +21,15 @@ defmodule BenarIDWeb.APIController do
   end
 
   def stats(conn, %{"id" => id}) do
-    json conn, %{id: id}
+    member_id = if conn.assigns[:user] do
+      conn.assigns.user.id
+    end
+    case Article.stats(id, member_id) do
+      {:ok, article_stats} ->
+        json conn, %{ok: true, stats: article_stats}
+      :error ->
+        json conn, %{ok: false}
+    end
   end
 
   def rate(conn, %{"article_id" => article_id, "ratings" => ratings}) do

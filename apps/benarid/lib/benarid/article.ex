@@ -48,6 +48,29 @@ defmodule BenarID.Article do
     end
   end
 
+  def stats(article_id, nil) do
+    query = from ar in ArticleRating,
+      left_join: r in assoc(ar, :rating),
+      where: ar.article_id == ^article_id,
+      group_by: [r.slug, r.label],
+      select: %{
+        slug: r.slug,
+        label: r.label,
+        value: fragment("AVG(?)", ar.value),
+        count: fragment("COUNT(*)")
+      }
+
+    case Repo.all(query) do
+      nil ->
+        :error
+      rows ->
+        processed_rows =
+          rows
+          |> Enum.reduce(%{}, fn x, acc -> Map.put(acc, x.slug, x) end)
+        {:ok, processed_rows}
+    end
+  end
+
   defp create_article_if_not_exist(url, portal_id) do
     case find_by_url(url) do
       :not_found ->
