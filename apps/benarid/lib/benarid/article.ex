@@ -48,7 +48,17 @@ defmodule BenarID.Article do
     end
   end
 
-  def stats(article_id, nil) do
+  def stats(article_id, nil), do: do_stats(article_id)
+  def stats(article_id, member_id) do
+    case do_stats(article_id) do
+      {:ok, article_stats} ->
+        {:ok, Map.put(article_stats, :rated, rated?(article_id, member_id))}
+      :error ->
+        :error
+    end
+  end
+
+  defp do_stats(article_id) do
     query = from ar in ArticleRating,
       left_join: r in assoc(ar, :rating),
       where: ar.article_id == ^article_id,
@@ -64,11 +74,16 @@ defmodule BenarID.Article do
       nil ->
         :error
       rows ->
-        processed_rows =
-          rows
-          |> Enum.reduce(%{}, fn x, acc -> Map.put(acc, x.slug, x) end)
-        {:ok, processed_rows}
+        {:ok, %{rating: rows}}
     end
+  end
+
+  defp rated?(article_id, member_id) do
+    query = from ar in ArticleRating,
+      where: ar.article_id == ^article_id,
+      where: ar.member_id == ^member_id
+
+    Repo.aggregate(query, :count, :id) > 0
   end
 
   defp create_article_if_not_exist(url, portal_id) do
