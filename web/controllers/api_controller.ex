@@ -8,15 +8,15 @@ defmodule BenarID.Web.APIController do
 
   def me(conn, _params) do
     {:found, member} = Member.find_by_id(conn.assigns.user.id)
-    json conn, %{id: member.id, name: member.name}
+    conn |> json(%{id: member.id, name: member.name})
   end
 
   def process(conn, %{"url" => url}) do
     case Article.process(url) do
-      {:error, :not_found} ->
-        json conn, %{not_found: true}
       {:ok, id} ->
-        json conn, %{id: id}
+        conn |> json(%{id: id})
+      {:error, :not_found} ->
+        conn |> put_status(404) |> json(%{error: "not found"})
     end
   end
 
@@ -26,9 +26,9 @@ defmodule BenarID.Web.APIController do
     end
     case Article.stats(id, member_id) do
       {:ok, article_stats} ->
-        json conn, %{ok: true, stats: article_stats}
+        conn |> json(article_stats)
       :error ->
-        json conn, %{ok: false}
+        conn |> put_status(404) |> json(%{error: "not found"})
     end
   end
 
@@ -37,9 +37,9 @@ defmodule BenarID.Web.APIController do
     ratings = ratings |> Enum.into([])
     case Article.rate(ratings, member_id, article_id) do
       :ok ->
-        json conn, %{ok: true}
-      _ ->
-        json conn, %{ok: false}
+        conn |> json(%{ok: true})
+      :error ->
+        conn |> put_status(404) |> json(%{error: "not_found"})
     end
   end
 
