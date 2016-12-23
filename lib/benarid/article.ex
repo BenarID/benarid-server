@@ -5,6 +5,7 @@ defmodule BenarID.Article do
   alias Ecto.Multi
   alias BenarID.Schema.Article
   alias BenarID.Schema.ArticleRating
+  alias BenarID.Schema.Rating
   alias BenarID.{
     Portal,
     URL,
@@ -59,15 +60,22 @@ defmodule BenarID.Article do
   end
 
   defp do_stats(article_id) do
-    query = from ar in ArticleRating,
-      left_join: r in assoc(ar, :rating),
+    article_rating_query = from ar in ArticleRating,
       where: ar.article_id == ^article_id,
-      group_by: [r.slug, r.label],
+      group_by: ar.rating_id,
+      select: %{
+        rating_id: ar.rating_id,
+        value: fragment("AVG(?)", ar.value),
+        count: fragment("COUNT(*)"),
+      }
+
+    query = from r in Rating,
+      left_join: ar in subquery(article_rating_query), on: r.id == ar.rating_id,
       select: %{
         slug: r.slug,
         label: r.label,
-        value: fragment("AVG(?)", ar.value),
-        count: fragment("COUNT(*)")
+        value: fragment("COALESCE(?, 0)", ar.value),
+        count: fragment("COALESCE(?, 0)", ar.count),
       }
 
     case Repo.all(query) do
