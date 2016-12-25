@@ -16,7 +16,7 @@ defmodule BenarID.Web.APIController do
       {:ok, id} ->
         conn |> json(%{id: id})
       {:error, :not_found} ->
-        conn |> put_status(404) |> json(%{error: "not found"})
+        conn |> json(%{id: nil, message: "Portal berita tidak ditemukan di database."})
     end
   end
 
