@@ -23,7 +23,9 @@ defmodule BenarID.Web.APIControllerTest do
 
   test "/process: non-existent portal url should return not found", %{conn: conn} do
     conn = post conn, api_path(conn, :process), %{url: "http://foobar.com/baz"}
-    assert json_response(conn, 404)["error"] == "not found"
+    assert json_response(conn, 404) == %{
+      "error" => "not found",
+    }
   end
 
   test "/process: matching portal should create new article entry", %{conn: conn} do
@@ -35,7 +37,9 @@ defmodule BenarID.Web.APIControllerTest do
     conn1 = post conn, api_path(conn, :process), %{url: @article_url}
     article_id = json_response(conn1, 200)["id"]
     conn2 = post conn, api_path(conn, :process), %{url: @article_url}
-    assert json_response(conn2, 200)["id"] == article_id
+    assert json_response(conn2, 200) == %{
+      "id" => article_id,
+    }
   end
 
   ## /stats tests
@@ -44,7 +48,9 @@ defmodule BenarID.Web.APIControllerTest do
     conn1 = post conn, api_path(conn, :process), %{url: @article_url}
     article_id = json_response(conn1, 200)["id"]
     conn2 = get conn, api_path(conn, :stats), %{id: article_id}
-    assert json_response(conn2, 200)["rating"] |> is_list()
+    assert json_response(conn2, 200) == %{
+      "rating" => [],
+    }
   end
 
   test "/stats: should have `rated` field if member is authenticated", %{conn: conn, data: data} do
@@ -52,7 +58,10 @@ defmodule BenarID.Web.APIControllerTest do
     conn1 = post conn, api_path(conn, :process), %{url: @article_url}
     article_id = json_response(conn1, 200)["id"]
     conn2 = get conn, api_path(conn, :stats), %{id: article_id}
-    assert json_response(conn2, 200)["rated"] |> is_boolean()
+    assert json_response(conn2, 200) == %{
+      "rating" => [],
+      "rated" => false,
+    }
   end
 
   ## /me tests
@@ -60,9 +69,10 @@ defmodule BenarID.Web.APIControllerTest do
   test "/me: should give name of authenticated member", %{conn: conn, data: data} do
     conn = authenticate conn, data
     conn = get conn, api_path(conn, :me)
-    response = json_response(conn, 200)
-    assert response["id"] == data.member.id
-    assert response["name"] == data.member.name
+    assert json_response(conn, 200) == %{
+      "id" => data.member.id,
+      "name" => data.member.name,
+    }
   end
 
   ## /rate tests
