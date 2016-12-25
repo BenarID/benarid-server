@@ -22,6 +22,8 @@ defmodule BenarID.Schema.ArticleRating do
     struct
     |> cast(params, [:value, :article_id, :rating_id, :member_id])
     |> validate_required([:value, :article_id, :rating_id, :member_id])
+    |> foreign_key_constraint(:article_id)
+    |> foreign_key_constraint(:rating_id)
     |> unique_constraint(:member_id,
       name: :article_ratings_article_id_rating_id_member_id_index
     )

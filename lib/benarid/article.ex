@@ -45,8 +45,8 @@ defmodule BenarID.Article do
     case Repo.transaction(multi) do
       {:ok, _} ->
         :ok
-      error ->
-        error
+      {:error, _id, _changeset, _} ->
+        :error
     end
   end
 

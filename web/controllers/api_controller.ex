@@ -28,7 +28,7 @@ defmodule BenarID.Web.APIController do
       {:ok, article_stats} ->
         conn |> json(article_stats)
       :error ->
-        conn |> put_status(404) |> json(%{error: "not found"})
+        conn |> put_status(404) |> json(%{message: "not found"})
     end
   end
 
@@ -39,7 +39,7 @@ defmodule BenarID.Web.APIController do
       :ok ->
         conn |> json(%{ok: true})
       :error ->
-        conn |> put_status(404) |> json(%{error: "not_found"})
+        conn |> put_status(404) |> json(%{message: "not found"})
     end
   end
 
