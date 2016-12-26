@@ -80,6 +80,7 @@ defmodule BenarID.Article do
       left_join: ar in ArticleRatingSummary,
         on: ar.article_id == ^article_id and ar.rating_id == r.id,
       select: %{
+        id: r.id,
         slug: r.slug,
         label: r.label,
         value: fragment("COALESCE(1.0 * ? / ?, 0)", ar.sum, ar.count),

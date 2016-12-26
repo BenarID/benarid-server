@@ -5,12 +5,17 @@ defmodule BenarID.Web.APIControllerTest do
     Portal,
     PortalHost,
     Member,
+    Rating,
   }
 
   @portal %{name: "Detik.com", slug: "detikcom", site_url: "http://www.detik.com"}
   @portal_hosts %{hostname: "news.detik.com"}
   @article_url "https://news.detik.com/internasional/3377369/usai-penangkapan-teroris-di-tangsel-australia-imbau-warganya-waspada"
   @member %{name: "Kairi", email: "kairi@email.com"}
+  @ratings [
+    %{slug: "rating-1", label: "Rating 1"},
+    %{slug: "rating-2", label: "Rating 2"},
+  ]
 
   setup %{conn: conn} do
     portal = Repo.insert! Portal.changeset(%Portal{}, @portal)
@@ -44,6 +49,29 @@ defmodule BenarID.Web.APIControllerTest do
   test "/process: should return rating of an existing article", %{conn: conn} do
     conn = post conn, api_path(conn, :process), %{url: @article_url}
     assert json_response(conn, 200)["rating"] == []
+  end
+
+  test "/process: should list all available ratings", %{conn: conn} do
+    Enum.each @ratings, fn rating ->
+      Repo.insert! Rating.changeset(%Rating{}, rating)
+    end
+    conn = post conn, api_path(conn, :process), %{url: @article_url}
+    rating_response = json_response(conn, 200)["rating"]
+    assert length(rating_response) == length(@ratings)
+  end
+
+  test "/process: a rating item should contain id, slug, label, value, and count", %{conn: conn} do
+    rating = Enum.at(@ratings, 0)
+    %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
+    conn = post conn, api_path(conn, :process), %{url: @article_url}
+    rating_response = List.first(json_response(conn, 200)["rating"])
+    assert rating_response == %{
+      "id" => rating_id,
+      "slug" => rating.slug,
+      "label" => rating.label,
+      "value" => "0",
+      "count" => 0,
+    }
   end
 
   test "/process: should have `rated` field if member is authenticated", %{conn: conn, data: data} do
