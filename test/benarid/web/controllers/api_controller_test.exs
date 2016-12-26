@@ -30,8 +30,7 @@ defmodule BenarID.Web.APIControllerTest do
 
   test "/process: non-existent portal url should return not found", %{conn: conn} do
     conn = post conn, api_path(conn, :process), %{url: "http://foobar.com/baz"}
-    assert json_response(conn, 200) == %{
-      "id" => nil,
+    assert json_response(conn, 422) == %{
       "message" => "Portal berita tidak ditemukan di database.",
     }
   end

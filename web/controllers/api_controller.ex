@@ -14,7 +14,7 @@ defmodule BenarID.Web.APIController do
       {:ok, article_stats} ->
         conn |> json(article_stats)
       {:error, :not_found} ->
-        conn |> json(%{id: nil, message: "Portal berita tidak ditemukan di database."})
+        conn |> put_status(:unprocessable_entity) |> json(%{message: "Portal berita tidak ditemukan di database."})
     end
   end
 
