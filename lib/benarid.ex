@@ -1,4 +1,10 @@
 defmodule BenarID do
+  @moduledoc """
+  Main application of BenarID.
+
+  This module also contains the public API for dealing with our data.
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
@@ -28,4 +34,27 @@ defmodule BenarID do
     BenarID.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  ################
+  ## Public API ##
+  ################
+
+  alias BenarID.{
+    Article,
+    Member,
+    Rating,
+  }
+
+  def find_member_by_id(member_id) do
+    Member.find_by_id(member_id)
+  end
+
+  def process_url(url, member_id) do
+    Article.process_url(url, member_id)
+  end
+
+  def rate_article(ratings, member_id, article_id) do
+    Rating.rate_article(ratings, member_id, article_id)
+  end
+
 end

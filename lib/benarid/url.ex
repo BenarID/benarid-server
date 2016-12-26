@@ -1,7 +1,5 @@
 defmodule BenarID.URL do
-  @moduledoc """
-  Module for parsing URL logic.
-  """
+  @moduledoc false
 
   def normalize_url("m.detik.com", path) do
     splitted_path = path |> String.split("/")

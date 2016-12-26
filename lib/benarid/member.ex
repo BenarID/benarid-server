@@ -1,9 +1,6 @@
 defmodule BenarID.Member do
-  @moduledoc """
-  Module for authentication.
+  @moduledoc false
 
-  Caution: API still not stable.
-  """
   import Ecto.Query
 
   alias BenarID.Repo

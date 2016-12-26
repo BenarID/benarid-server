@@ -1,7 +1,5 @@
 defmodule BenarID.Portal do
-  @moduledoc """
-  Interface for managing portals.
-  """
+  @moduledoc false
 
   import Ecto.Query
 

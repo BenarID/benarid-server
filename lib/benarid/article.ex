@@ -1,19 +1,21 @@
 defmodule BenarID.Article do
+  @moduledoc false
 
   import Ecto.Query
 
-  alias Ecto.Multi
-  alias BenarID.Schema.Article
-  alias BenarID.Schema.ArticleRating
-  alias BenarID.Schema.ArticleRatingSummary
-  alias BenarID.Schema.Rating
+  alias BenarID.Schema.{
+    Article,
+    ArticleRating,
+    ArticleRatingSummary,
+    Rating,
+  }
   alias BenarID.{
     Portal,
-    URL,
     Repo,
+    URL,
   }
 
-  def process(url, member_id) do
+  def process_url(url, member_id) do
     parsed_url = URI.parse url
     case Portal.find_by_host(parsed_url.host) do
       :not_found ->
@@ -25,71 +27,7 @@ defmodule BenarID.Article do
     end
   end
 
-  def rate(ratings, member_id, article_id) do
-    changesets = for {id, value} <- ratings do
-      data = %{
-        value: value,
-        rating_id: id,
-        member_id: member_id,
-        article_id: article_id
-      }
-      ArticleRating.changeset(%ArticleRating{}, data)
-    end
-
-    multi =
-      changesets
-      |> Enum.reduce(Multi.new, fn changeset, multi ->
-        Multi.insert(multi, Ecto.UUID.generate(), changeset)
-      end)
-
-    case Repo.transaction(multi) do
-      {:ok, _} ->
-        :ok
-      {:error, _id, _changeset, _} ->
-        :error
-    end
-  end
-
-  def stats(article_id, nil), do: do_stats(article_id)
-  def stats(article_id, member_id) do
-    case do_stats(article_id) do
-      {:ok, article_stats} ->
-        article_stats =
-          article_stats
-          |> Map.put(:id, article_id)
-          |> Map.put(:rated, rated?(article_id, member_id))
-        {:ok, article_stats}
-      :error ->
-        :error
-    end
-  end
-
-  defp do_stats(article_id) do
-    query = from r in Rating,
-      left_join: ar in ArticleRatingSummary,
-        on: ar.article_id == ^article_id and ar.rating_id == r.id,
-      select: %{
-        slug: r.slug,
-        label: r.label,
-        value: fragment("COALESCE(1.0 * ? / ?, 0)", ar.sum, ar.count),
-        count: fragment("COALESCE(?, 0)", ar.count),
-      }
-
-    case Repo.all(query) do
-      nil ->
-        :error
-      rows ->
-        {:ok, %{rating: rows}}
-    end
-  end
-
-  defp rated?(article_id, member_id) do
-    query = from ar in ArticleRating,
-      where: ar.article_id == ^article_id,
-      where: ar.member_id == ^member_id
-
-    Repo.aggregate(query, :count, :id) > 0
-  end
+  # Private API
 
   defp create_article_if_not_exist(url, portal_id) do
     case find_by_url(url) do
@@ -121,6 +59,47 @@ defmodule BenarID.Article do
       {:error, _} ->
         {:error, changeset.errors}
     end
+  end
+
+  defp stats(article_id, nil), do: fetch_rating_summary(article_id)
+  defp stats(article_id, member_id) do
+    case fetch_rating_summary(article_id) do
+      {:ok, article_stats} ->
+        article_stats =
+          article_stats
+          |> Map.put(:id, article_id)
+          |> Map.put(:rated, rated?(article_id, member_id))
+        {:ok, article_stats}
+      :error ->
+        :error
+    end
+  end
+
+  defp fetch_rating_summary(article_id) do
+    query = from r in Rating,
+      left_join: ar in ArticleRatingSummary,
+        on: ar.article_id == ^article_id and ar.rating_id == r.id,
+      select: %{
+        slug: r.slug,
+        label: r.label,
+        value: fragment("COALESCE(1.0 * ? / ?, 0)", ar.sum, ar.count),
+        count: fragment("COALESCE(?, 0)", ar.count),
+      }
+
+    case Repo.all(query) do
+      nil ->
+        :error
+      rows ->
+        {:ok, %{rating: rows}}
+    end
+  end
+
+  defp rated?(article_id, member_id) do
+    query = from ar in ArticleRating,
+      where: ar.article_id == ^article_id,
+      where: ar.member_id == ^member_id
+
+    Repo.aggregate(query, :count, :id) > 0
   end
 
 end
