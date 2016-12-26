@@ -21,9 +21,15 @@ defmodule BenarID.Article do
       :not_found ->
         {:error, :not_found}
       {:found, portal} ->
-        {_host, article_url} = URL.normalize_url(parsed_url.host, parsed_url.path)
-        {:ok, article} = create_article_if_not_exist(article_url, portal.id)
-        stats(article.id, member_id)
+        {host, article_url} = URL.normalize_url(parsed_url.host, parsed_url.path)
+
+        case URL.valid_article_url?(String.split(host, "."), article_url) do
+          false ->
+            {:error, :invalid_url}
+          true ->
+            {:ok, article} = create_article_if_not_exist(article_url, portal.id)
+            stats(article.id, member_id)
+        end
     end
   end
 
