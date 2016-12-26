@@ -2,6 +2,7 @@ defmodule BenarID.Web.APIControllerTest do
   use BenarID.Web.ConnCase, async: true
 
   alias BenarID.Schema.{
+    Article,
     Portal,
     PortalHost,
     Member,
@@ -21,7 +22,8 @@ defmodule BenarID.Web.APIControllerTest do
     portal = Repo.insert! Portal.changeset(%Portal{}, @portal)
     _portal_host = Repo.insert! PortalHost.changeset(%PortalHost{}, Map.put(@portal_hosts, :portal_id, portal.id))
     member = Repo.insert! Member.changeset(%Member{}, @member)
-    {:ok, conn: put_req_header(conn, "accept", "application/json"), data: %{member: member}}
+    data = %{portal: portal, member: member}
+    {:ok, conn: put_req_header(conn, "accept", "application/json"), data: data}
   end
 
   ## /process tests
@@ -92,6 +94,27 @@ defmodule BenarID.Web.APIControllerTest do
   end
 
   ## /rate tests
+
+  test "/rate: should return ok: true if successfully rated", %{conn: conn, data: data} do
+    ratings = Enum.map @ratings, fn rating ->
+      %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
+      {"#{rating_id}", 5}
+    end
+    ratings_map = ratings |> Enum.into(%{})
+    article =
+      %Article{}
+      |> Article.changeset(%{url: @article_url, portal_id: data.portal.id})
+      |> Repo.insert!
+
+    conn = authenticate conn, data
+    conn = post conn, api_path(conn, :rate), %{
+      article_id: article.id,
+      ratings: ratings_map,
+    }
+    assert json_response(conn, 200) == %{
+      "ok" => true
+    }
+  end
 
   ## helper functions
 
