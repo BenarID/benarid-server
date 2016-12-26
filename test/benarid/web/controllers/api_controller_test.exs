@@ -38,31 +38,18 @@ defmodule BenarID.Web.APIControllerTest do
     conn1 = post conn, api_path(conn, :process), %{url: @article_url}
     article_id = json_response(conn1, 200)["id"]
     conn2 = post conn, api_path(conn, :process), %{url: @article_url}
-    assert json_response(conn2, 200) == %{
-      "id" => article_id,
-    }
+    assert json_response(conn2, 200)["id"] == article_id
   end
 
-  ## /stats tests
-
-  test "/stats: should give stats of an article id", %{conn: conn} do
-    conn1 = post conn, api_path(conn, :process), %{url: @article_url}
-    article_id = json_response(conn1, 200)["id"]
-    conn2 = get conn, api_path(conn, :stats), %{id: article_id}
-    assert json_response(conn2, 200) == %{
-      "rating" => [],
-    }
+  test "/process: should return rating of an existing article", %{conn: conn} do
+    conn = post conn, api_path(conn, :process), %{url: @article_url}
+    assert json_response(conn, 200)["rating"] == []
   end
 
-  test "/stats: should have `rated` field if member is authenticated", %{conn: conn, data: data} do
+  test "/process: should have `rated` field if member is authenticated", %{conn: conn, data: data} do
     conn = authenticate conn, data
-    conn1 = post conn, api_path(conn, :process), %{url: @article_url}
-    article_id = json_response(conn1, 200)["id"]
-    conn2 = get conn, api_path(conn, :stats), %{id: article_id}
-    assert json_response(conn2, 200) == %{
-      "rating" => [],
-      "rated" => false,
-    }
+    conn = post conn, api_path(conn, :process), %{url: @article_url}
+    assert json_response(conn, 200)["rated"] == false
   end
 
   ## /me tests

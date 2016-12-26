@@ -13,7 +13,7 @@ defmodule BenarID.Article do
     Repo,
   }
 
-  def process(url) do
+  def process(url, member_id) do
     parsed_url = URI.parse url
     case Portal.find_by_host(parsed_url.host) do
       :not_found ->
@@ -21,7 +21,7 @@ defmodule BenarID.Article do
       {:found, portal} ->
         {_host, article_url} = URL.normalize_url(parsed_url.host, parsed_url.path)
         {:ok, article} = create_article_if_not_exist(article_url, portal.id)
-        {:ok, article.id}
+        stats(article.id, member_id)
     end
   end
 
@@ -54,7 +54,11 @@ defmodule BenarID.Article do
   def stats(article_id, member_id) do
     case do_stats(article_id) do
       {:ok, article_stats} ->
-        {:ok, Map.put(article_stats, :rated, rated?(article_id, member_id))}
+        article_stats =
+          article_stats
+          |> Map.put(:id, article_id)
+          |> Map.put(:rated, rated?(article_id, member_id))
+        {:ok, article_stats}
       :error ->
         :error
     end

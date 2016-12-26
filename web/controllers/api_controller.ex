@@ -12,23 +12,14 @@ defmodule BenarID.Web.APIController do
   end
 
   def process(conn, %{"url" => url}) do
-    case Article.process(url) do
-      {:ok, id} ->
-        conn |> json(%{id: id})
-      {:error, :not_found} ->
-        conn |> json(%{id: nil, message: "Portal berita tidak ditemukan di database."})
-    end
-  end
-
-  def stats(conn, %{"id" => id}) do
     member_id = if conn.assigns[:user] do
       conn.assigns.user.id
     end
-    case Article.stats(id, member_id) do
+    case Article.process(url, member_id) do
       {:ok, article_stats} ->
         conn |> json(article_stats)
-      :error ->
-        conn |> put_status(404) |> json(%{message: "not found"})
+      {:error, :not_found} ->
+        conn |> json(%{id: nil, message: "Portal berita tidak ditemukan di database."})
     end
   end
 
