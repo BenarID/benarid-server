@@ -25,9 +25,9 @@ defmodule BenarID.Repo.Migrations.CreateArticleRatingSummary do
     RETURNS trigger AS $$
     BEGIN
 
-      IF (TG_OP = 'INSERT' OR TG_OP = 'UPDATE') THEN
+      IF (TG_OP = 'INSERT') THEN
 
-        -- INSERT or UPDATE, we perform an upsert
+        -- INSERT, we perform an upsert
         INSERT INTO article_rating_summary AS ARS (article_id, rating_id, sum, count)
           VALUES
             (NEW.article_id, NEW.rating_id, NEW.value, 1)
@@ -35,6 +35,15 @@ defmodule BenarID.Repo.Migrations.CreateArticleRatingSummary do
             (article_id, rating_id)
           DO UPDATE SET
             (sum, count) = (ARS.sum + NEW.value, ARS.count + 1);
+
+      ELSIF (TG_OP = 'UPDATE') THEN
+
+        -- UPDATE, we subtract the sum with (old - new)
+        UPDATE article_rating_summary AS ARS
+          SET
+            sum = ARS.sum - (OLD.value - NEW.value)
+          WHERE article_id = NEW.article_id
+            AND rating_id = NEW.rating_id;
 
       ELSIF (TG_OP = 'DELETE') THEN
 

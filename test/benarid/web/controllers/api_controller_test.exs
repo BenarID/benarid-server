@@ -70,7 +70,7 @@ defmodule BenarID.Web.APIControllerTest do
       "id" => rating_id,
       "slug" => rating.slug,
       "label" => rating.label,
-      "value" => "0",
+      "sum" => 0,
       "count" => 0,
     }
   end
@@ -97,7 +97,7 @@ defmodule BenarID.Web.APIControllerTest do
   test "/rate: should return ok: true if successfully rated", %{conn: conn, data: data} do
     ratings = Enum.map @ratings, fn rating ->
       %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
-      {"#{rating_id}", 5}
+      {"#{rating_id}", 1}
     end
     ratings_map = ratings |> Enum.into(%{})
     article =
@@ -118,7 +118,7 @@ defmodule BenarID.Web.APIControllerTest do
   test "/rate: nonexistent id should return not found", %{conn: conn, data: data} do
     ratings = Enum.map @ratings, fn rating ->
       %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
-      {"#{rating_id}", 5}
+      {"#{rating_id}", 1}
     end
     ratings_map = ratings |> Enum.into(%{})
 
@@ -129,6 +129,55 @@ defmodule BenarID.Web.APIControllerTest do
     }
     assert json_response(conn, 422) == %{
       "message" => "Artikel tidak ditemukan di database.",
+    }
+  end
+
+  test "/rate: should handle invalid rating", %{conn: conn, data: data} do
+    ratings = Enum.map @ratings, fn rating ->
+      %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
+      {"#{rating_id}", 1000}
+    end
+    ratings_map = ratings |> Enum.into(%{})
+    article =
+      %Article{}
+      |> Article.changeset(%{url: @article_url, portal_id: data.portal.id})
+      |> Repo.insert!
+
+    conn = authenticate conn, data
+    conn = post conn, api_path(conn, :rate), %{
+      article_id: article.id,
+      ratings: ratings_map,
+    }
+    assert json_response(conn, 422) == %{
+      "message" => "Rating yang diberikan invalid."
+    }
+  end
+
+  test "/rate: should handle double rate", %{conn: conn, data: data} do
+    ratings = Enum.map @ratings, fn rating ->
+      %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
+      {"#{rating_id}", 1}
+    end
+    ratings_map = ratings |> Enum.into(%{})
+    article =
+      %Article{}
+      |> Article.changeset(%{url: @article_url, portal_id: data.portal.id})
+      |> Repo.insert!
+
+    post_data = %{
+      article_id: article.id,
+      ratings: ratings_map,
+    }
+
+    conn = authenticate conn, data
+    conn1 = post conn, api_path(conn, :rate), post_data
+    assert json_response(conn1, 200) == %{
+      "ok" => true,
+    }
+
+    conn2 = post conn, api_path(conn, :rate), post_data
+    assert json_response(conn2, 422) == %{
+      "message" => "Anda sudah memberikan rating untuk artikel ini."
     }
   end
 
