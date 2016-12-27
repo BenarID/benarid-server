@@ -115,6 +115,23 @@ defmodule BenarID.Web.APIControllerTest do
     }
   end
 
+  test "/rate: nonexistent id should return not found", %{conn: conn, data: data} do
+    ratings = Enum.map @ratings, fn rating ->
+      %{id: rating_id} = Repo.insert! Rating.changeset(%Rating{}, rating)
+      {"#{rating_id}", 5}
+    end
+    ratings_map = ratings |> Enum.into(%{})
+
+    conn = authenticate conn, data
+    conn = post conn, api_path(conn, :rate), %{
+      article_id: 1000,
+      ratings: ratings_map,
+    }
+    assert json_response(conn, 422) == %{
+      "message" => "Artikel tidak ditemukan di database.",
+    }
+  end
+
   ## helper functions
 
   defp authenticate(conn, data) do

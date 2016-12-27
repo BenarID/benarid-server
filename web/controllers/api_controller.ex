@@ -26,8 +26,12 @@ defmodule BenarID.Web.APIController do
     case BenarID.rate_article(ratings, member_id, article_id) do
       :ok ->
         conn |> json(%{ok: true})
-      :error ->
-        conn |> put_status(404) |> json(%{message: "not found"})
+      {:error, :not_found} ->
+        conn |> put_status(:unprocessable_entity) |> json(%{message: "Artikel tidak ditemukan di database."})
+      {:error, :has_rated} ->
+        conn |> put_status(:unprocessable_entity) |> json(%{message: "Anda sudah memberikan rating untuk artikel ini."})
+      {:error, :invalid_value} ->
+        conn |> put_status(:unprocessable_entity) |> json(%{message: "Rating yang diberikan invalid."})
     end
   end
 

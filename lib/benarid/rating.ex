@@ -26,8 +26,14 @@ defmodule BenarID.Rating do
     case Repo.transaction(multi) do
       {:ok, _} ->
         :ok
-      {:error, _id, _changeset, _} ->
-        :error
+      {:error, _id, %Ecto.Changeset{errors: [article_id: _]}, _} ->
+        {:error, :not_found}
+      {:error, _id, %Ecto.Changeset{errors: [member_id: _]}, _} ->
+        {:error, :has_rated}
+      {:error, _id, %Ecto.Changeset{errors: [value: _]}, _} ->
+        {:error, :invalid_value}
+      {:error, _id, %Ecto.Changeset{errors: [rating_id: _]}, _} ->
+        {:error, :invalid_value}
     end
   end
 
