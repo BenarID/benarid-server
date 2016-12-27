@@ -20,7 +20,7 @@ defmodule Mix.Tasks.Benarid.Rating.Sync do
     case OptionParser.parse(args) do
       {[], [], _} ->
         data = parse_file file
-        Rating.sync(data)
+        :ok = Rating.sync(data)
         Mix.shell.info "Successfully synced ratings."
       _ ->
         Mix.raise "expected benarid.rating.sync to not receive any arguments."

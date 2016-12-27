@@ -12,8 +12,9 @@ defmodule BenarID.Portal do
 
   def create_portal(data) do
     changeset = Portal.changeset(%Portal{}, data)
+    on_conflict = [set: [name: data.name, site_url: data.site_url]]
 
-    case Repo.insert(changeset) do
+    case Repo.insert(changeset, on_conflict: on_conflict, conflict_target: :slug) do
       {:ok, portal} ->
         {:ok, portal}
       {:error, _} ->
@@ -23,11 +24,14 @@ defmodule BenarID.Portal do
 
   def populate_hosts(portal, hosts) do
     multi =
+      Multi.new
+      |> Multi.delete_all(Ecto.UUID.generate(), Ecto.assoc(portal, :hosts))
+    multi =
       hosts
       |> Enum.map(fn host -> %{hostname: host, portal_id: portal.id} end)
       |> Enum.map(fn host -> PortalHost.changeset(%PortalHost{}, host) end)
-      |> Enum.reduce(Multi.new, fn changeset, multi ->
-        Multi.insert(multi, Ecto.UUID.generate(), changeset)
+      |> Enum.reduce(multi, fn changeset, m ->
+        Multi.insert(m, Ecto.UUID.generate(), changeset)
       end)
 
     case Repo.transaction(multi) do

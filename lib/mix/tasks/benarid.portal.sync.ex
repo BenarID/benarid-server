@@ -47,7 +47,7 @@ defmodule Mix.Tasks.Benarid.Portal.Sync do
     }
     hosts = data["hosts"]
     {:ok, portal} = Portal.create_portal(portal_data)
-    Portal.populate_hosts(portal, hosts)
+    :ok = Portal.populate_hosts(portal, hosts)
     Mix.shell.info "Successfully synced portal #{portal.name}."
   end
 

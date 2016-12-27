@@ -36,7 +36,9 @@ defmodule BenarID.Rating do
       data
       |> Enum.map(fn rating -> Rating.changeset(%Rating{}, rating) end)
       |> Enum.reduce(Multi.new, fn changeset, multi ->
-        Multi.insert(multi, Ecto.UUID.generate(), changeset)
+        Multi.insert multi, Ecto.UUID.generate(), changeset,
+          on_conflict: [set: [label: changeset.changes.label]],
+          conflict_target: :slug
       end)
 
     case Repo.transaction(multi) do
