@@ -18,9 +18,7 @@ defmodule BenarID.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {BenarID, []},
-     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :phoenix_token_plug,
-                    :ueberauth_google, :yaml_elixir]]
+     extra_applications: [:logger]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,7 +39,7 @@ defmodule BenarID.Mixfile do
      {:yaml_elixir, "~> 1.2"},
 
      # Dev and test dependencies
-     {:credo, "~> 0.5", only: [:dev, :test]}]
+     {:credo, "~> 0.5", only: [:dev, :test], runtime: false}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
