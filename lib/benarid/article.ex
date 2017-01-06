@@ -89,6 +89,7 @@ defmodule BenarID.Article do
         id: r.id,
         slug: r.slug,
         label: r.label,
+        question: r.question,
         sum: fragment("COALESCE(?, 0)", ar.sum),
         count: fragment("COALESCE(?, 0)", ar.count),
       }

@@ -8,6 +8,7 @@ defmodule BenarID.Schema.Rating do
   schema "ratings" do
     field :slug, :string
     field :label, :string
+    field :question, :string
 
     timestamps()
   end
@@ -17,8 +18,8 @@ defmodule BenarID.Schema.Rating do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:slug, :label])
-    |> validate_required([:slug, :label])
+    |> cast(params, [:slug, :label, :question])
+    |> validate_required([:slug, :label, :question])
     |> unique_constraint(:slug)
   end
 end

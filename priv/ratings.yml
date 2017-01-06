@@ -1,8 +1,15 @@
 - slug: neutrality
   label: Netralitas
+  question: Netral?
 - slug: comprehensiveness
   label: Kelengkapan informasi
+  question: Informasinya lengkap?
 - slug: title-relevance
   label: Relevansi judul dengan isi
+  question: Judulnya relevan dengan isi?
 - slug: source-competence
   label: Kompetensi narasumber
+  question: Narasumbernya kompeten?
+- slug: importance
+  label: Kepentingan informasi
+  question: Informasinya penting?

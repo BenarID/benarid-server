@@ -5,6 +5,7 @@ defmodule BenarID.Repo.Migrations.CreateRatings do
     create table(:ratings) do
       add :slug, :string
       add :label, :string
+      add :question, :string
 
       timestamps()
     end
