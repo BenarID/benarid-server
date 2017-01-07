@@ -31,4 +31,10 @@ defmodule BenarID.URL do
     url |> String.match?(~r/\/\d{13,16}-\d{2}-\d{5,8}\//)
   end
 
+  def valid_article_url?([_sub, "bbc", "com"], url) do
+    # Articles in bbc indonesia always starts with /indonesia, and
+    # a segment containing category and integer identifier.
+    url |> String.match?(~r/\/indonesia\/\w+-\d{7,10}$/)
+  end
+
 end
