@@ -22,16 +22,13 @@ defmodule BenarID.URL do
     {new_host, "#{new_host}/#{new_path}"}
   end
 
-  def normalize_url("m.cnnindonesia.com", path) do
-    new_host = "www.cnnindonesia.com"
-    {new_host, "#{new_host}#{path}"}
-  end
-
   def normalize_url(host, path) do
     new_host = normalize_host(String.split(host, "."))
     {new_host, "#{new_host}#{path}"}
   end
 
+  defp normalize_host(["m", "cnnindonesia", "com"]),
+    do: "www.cnnindonesia.com"
   defp normalize_host([_sub, "tempo", "co"]),
     do: "www.tempo.co"
   defp normalize_host([_sub, "republika", "co", "id"]),
@@ -64,7 +61,7 @@ defmodule BenarID.URL do
   def valid_article_url?([_sub, "cnnindonesia", "com"], url) do
     # Articles in cnnindonesia always have an integers separated by
     # two dashes as an identifier..
-    url |> String.match?(~r/\/\d{13,16}-\d{2}-\d{5,8}\//)
+    url |> String.match?(~r/\/\d{13,16}-\d{2,5}-\d{5,8}\//)
   end
 
   def valid_article_url?([_sub, "bbc", "com"], url) do
