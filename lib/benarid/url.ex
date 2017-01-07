@@ -22,6 +22,12 @@ defmodule BenarID.URL do
     {new_host, "#{new_host}/#{new_path}"}
   end
 
+  def normalize_url("m.bola.viva.co.id", path) do
+    new_host = "www.viva.co.id"
+    new_path = path |> String.replace("/news/", "/bola/")
+    {new_host, "#{new_host}#{new_path}"}
+  end
+
   def normalize_url(host, path) do
     new_host = normalize_host(String.split(host, "."))
     {new_host, "#{new_host}#{path}"}
@@ -37,6 +43,12 @@ defmodule BenarID.URL do
     do: "www.republika.co.id"
   defp normalize_host(["m", "merdeka", "com"]),
     do: "www.merdeka.com"
+  defp normalize_host(["sport", "viva", "co", "id"]),
+    do: "news.viva.co.id"
+  defp normalize_host([_sub, "news", "viva", "co", "id"]),
+    do: "news.viva.co.id"
+  defp normalize_host(["m", sub, "viva", "co", "id"]),
+    do: "#{sub}.viva.co.id"
   defp normalize_host(host_segments),
     do: Enum.join(host_segments, ".")
 
@@ -101,6 +113,12 @@ defmodule BenarID.URL do
     # Articles in merdeka is always two segments by category and ends
     # with .html.
     url |> String.match?(~r/\/\w+\/.+\.html$/)
+  end
+
+  def valid_article_url?([_sub, "viva", "co", "id"], url) do
+    # Articles in viva has integer identifier followed by slug as the
+    # last segment, separated by a dash.
+    url |> String.match?(~r/\/\d{5,8}-\w+/)
   end
 
 end

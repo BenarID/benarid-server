@@ -1,0 +1,31 @@
+# Display name for the portal. Example: Detik.com
+name: Viva.co.id
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: vivacoid
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: http://www.viva.co.id
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - www.viva.co.id
+  - politik.news.viva.co.id
+  - bisnis.news.viva.co.id
+  - nasional.news.viva.co.id
+  - metro.news.viva.co.id
+  - dunia.news.viva.co.id
+  - teknologi.news.viva.co.id
+  - sorot.news.viva.co.id
+  - wawancara.news.viva.co.id
+  - fokus.news.viva.co.id
+  - sport.viva.co.id
+  - life.viva.co.id
+  - log.viva.co.id
+  - otomotif.news.viva.co.id
+  - m.news.viva.co.id
+  - m.bola.viva.co.id
+  - m.life.viva.co.id
+  - m.log.viva.co.id
