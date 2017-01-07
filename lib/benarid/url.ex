@@ -37,4 +37,16 @@ defmodule BenarID.URL do
     url |> String.match?(~r/\/indonesia\/\w+-\d{7,10}$/)
   end
 
+  def valid_article_url?([_sub, "tempo", "co"], url) do
+    # Articles in tempo follows these validation rules.
+    validations = [
+      # Has date segments followed by an integer identifier
+      url |> String.match?(~r/\/\d{4}\/\d{2}\/\d{2}\/\d+\//),
+      # Unique for beritafoto, does not have date segments.
+      url |> String.match?(~r/\/beritafoto\/\d+\//),
+    ]
+    # Check if any of the validations pass.
+    Enum.any? validations, &(&1)
+  end
+
 end

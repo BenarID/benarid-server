@@ -1,0 +1,29 @@
+# Display name for the portal. Example: Detik.com
+name: Tempo.co
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: tempoco
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: https://www.tempo.co
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - nasional.tempo.co
+  - bisnis.tempo.co
+  - metro.tempo.co
+  - dunia.tempo.co
+  - bola.tempo.co
+  - sport.tempo.co
+  - pon.tempo.co
+  - gaya.tempo.co
+  - seleb.tempo.co
+  - cantik.tempo.co
+  - tekno.tempo.co
+  - otomotif.tempo.co
+  - travel.tempo.co
+  - foto.tempo.co
+  - video.tempo.co
+  - grafis.tempo.co
