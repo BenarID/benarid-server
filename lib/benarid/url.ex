@@ -35,6 +35,8 @@ defmodule BenarID.URL do
     do: "www.republika.co.id"
   defp normalize_host(["republika", "co", "id"]),
     do: "www.republika.co.id"
+  defp normalize_host(host_segments),
+    do: Enum.join(host_segments, ".")
 
   @doc """
   Function to validate if, given a `host_segments` and a `url`, it
