@@ -1,5 +1,18 @@
 defmodule BenarID.URL do
-  @moduledoc false
+  @moduledoc """
+  Module for URL computation, such as normalizing and checking if
+  an article url is valid for a host.
+  """
+
+  @doc """
+  Function to normalize (canonicalize) a url for an article.
+
+  This is used for news portals that have different domains for
+  its mobile and desktop sites, so that we can store the article
+  canonically. In this case, we prefer the desktop version of
+  the url.
+  """
+  def normalize_url(host, path)
 
   def normalize_url("m.detik.com", path) do
     splitted_path = path |> String.split("/")
@@ -8,11 +21,24 @@ defmodule BenarID.URL do
     new_path = splitted_path |> Enum.drop(2) |> Enum.join("/")
     {new_host, "#{new_host}/#{new_path}"}
   end
+
   def normalize_url("m.cnnindonesia.com", path) do
     new_host = "www.cnnindonesia.com"
     {new_host, "#{new_host}#{path}"}
   end
+
   def normalize_url(host, path), do: {host, "#{host}#{path}"}
+
+  @doc """
+  Function to validate if, given a `host_segments` and a `url`, it
+  is a valid article url of the portal.
+
+  This is so that we only process article pages, and not, for example,
+  index pages, news listing, and so on.
+
+  The `host_segments` is the host, splitted by "." for pattern matching.
+  """
+  def valid_article_url?(host_segments, url)
 
   def valid_article_url?([_sub, "detik", "com"], url) do
     # Articles in detik always have an integer identifier,
