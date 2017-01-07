@@ -84,4 +84,10 @@ defmodule BenarID.URL do
     Enum.any? validations, &(&1)
   end
 
+  def valid_article_url?([_sub, "thejakartapost", "com"], url) do
+    # Articles in the jakarta post has a date segment and always
+    # ends with .html.
+    url |> String.match?(~r/\/\d{4}\/\d{2}\/\d{2}\/.+\.html$/)
+  end
+
 end
