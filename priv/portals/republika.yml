@@ -1,0 +1,24 @@
+# Display name for the portal. Example: Detik.com
+name: Republika
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: republika
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: http://www.republika.co.id
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - republika.co.id
+  - www.republika.co.id
+  - nasional.republika.co.id
+  - internasional.republika.co.id
+  - khazanah.republika.co.id
+  - bola.republika.co.id
+  - trendtek.republika.co.id
+  - gayahidup.republika.co.id
+  - senggang.republika.co.id
+  - en.republika.co.id
+  - m.republika.co.id

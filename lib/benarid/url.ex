@@ -36,7 +36,15 @@ defmodule BenarID.URL do
     {host, "#{host}#{path}"}
   end
 
-  def normalize_url(host, path), do: {host, "#{host}#{path}"}
+  def normalize_url(host, path) do
+    new_host = normalize_host(String.split(host, "."))
+    {new_host, "#{new_host}#{path}"}
+  end
+
+  defp normalize_host([_sub, "republika", "co", "id"]),
+    do: "www.republika.co.id"
+  defp normalize_host(["republika", "co", "id"]),
+    do: "www.republika.co.id"
 
   @doc """
   Function to validate if, given a `host_segments` and a `url`, it
@@ -88,6 +96,11 @@ defmodule BenarID.URL do
     # Articles in the jakarta post has a date segment and always
     # ends with .html.
     url |> String.match?(~r/\/\d{4}\/\d{2}\/\d{2}\/.+\.html$/)
+  end
+
+  def valid_article_url?([_sub, "republika", "co", "id"], url) do
+    # Articles in republika has date segments in the form of yy-mm-dd.
+    url |> String.match?(~r/\/\d{2}\/\d{2}\/\d{2}\//)
   end
 
 end
