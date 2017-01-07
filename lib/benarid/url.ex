@@ -17,12 +17,12 @@ defmodule BenarID.URL do
   def valid_article_url?([_sub, "detik", "com"], url) do
     # Articles in detik always have an integer identifier,
     # sometimes prepended by "d-".
-    url |> String.match?(~r/\/(d-)?\d{6,12}+\//)
+    url |> String.match?(~r/\/(d-)?\d{6,12}\//)
   end
 
   def valid_article_url?([_sub, "kompas", "com"], url) do
     # Articles in kompas always have an integer identifier.
-    url |> String.match?(~r/\/\d{6,12}+\//)
+    url |> String.match?(~r/\/\d{6,12}\//)
   end
 
   def valid_article_url?([_sub, "cnnindonesia", "com"], url) do
