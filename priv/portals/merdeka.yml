@@ -1,0 +1,15 @@
+# Display name for the portal. Example: Detik.com
+name: Merdeka.com
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: merdekacom
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: https://www.merdeka.com
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - www.merdeka.com
+  - m.merdeka.com

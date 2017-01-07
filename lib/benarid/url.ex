@@ -35,6 +35,8 @@ defmodule BenarID.URL do
     do: "www.republika.co.id"
   defp normalize_host(["republika", "co", "id"]),
     do: "www.republika.co.id"
+  defp normalize_host(["m", "merdeka", "com"]),
+    do: "www.merdeka.com"
   defp normalize_host(host_segments),
     do: Enum.join(host_segments, ".")
 
@@ -93,6 +95,12 @@ defmodule BenarID.URL do
   def valid_article_url?([_sub, "republika", "co", "id"], url) do
     # Articles in republika has date segments in the form of yy-mm-dd.
     url |> String.match?(~r/\/\d{2}\/\d{2}\/\d{2}\//)
+  end
+
+  def valid_article_url?([_sub, "merdeka", "com"], url) do
+    # Articles in merdeka is always two segments by category and ends
+    # with .html.
+    url |> String.match?(~r/\/\w+\/.+\.html$/)
   end
 
 end
