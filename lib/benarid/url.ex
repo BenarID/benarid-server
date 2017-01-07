@@ -27,20 +27,13 @@ defmodule BenarID.URL do
     {new_host, "#{new_host}#{path}"}
   end
 
-  def normalize_url("m.tempo.co" = host, path) do
-    # FIXME: Find a way to map this to desktop version url.
-    # As it stands, we have no way to infer the category
-    # (such as "nasional") from the mobile url. Hence,
-    # currently mobile sites are treated differently
-    # from the desktop version. Which is bad :(
-    {host, "#{host}#{path}"}
-  end
-
   def normalize_url(host, path) do
     new_host = normalize_host(String.split(host, "."))
     {new_host, "#{new_host}#{path}"}
   end
 
+  defp normalize_host([_sub, "tempo", "co"]),
+    do: "www.tempo.co"
   defp normalize_host([_sub, "republika", "co", "id"]),
     do: "www.republika.co.id"
   defp normalize_host(["republika", "co", "id"]),
