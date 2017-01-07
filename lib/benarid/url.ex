@@ -22,6 +22,14 @@ defmodule BenarID.URL do
     {new_host, "#{new_host}/#{new_path}"}
   end
 
+  def normalize_url("m.liputan6.com", path) do
+    splitted_path = path |> String.split("/")
+    category = Enum.at splitted_path, 1
+    new_host = "#{category}.liputan6.com"
+    new_path = splitted_path |> Enum.drop(2) |> Enum.join("/")
+    {new_host, "#{new_host}/#{new_path}"}
+  end
+
   def normalize_url("m.bola.viva.co.id", path) do
     new_host = "www.viva.co.id"
     new_path = path |> String.replace("/news/", "/bola/")
@@ -119,6 +127,11 @@ defmodule BenarID.URL do
     # Articles in viva has integer identifier followed by slug as the
     # last segment, separated by a dash.
     url |> String.match?(~r/\/\d{5,8}-\w+/)
+  end
+
+  def valid_article_url?([_sub, "liputan6", "com"], url) do
+    # Articles in kompas always have an integer identifier.
+    url |> String.match?(~r/\/\d{6,12}\//)
   end
 
 end

@@ -1,0 +1,27 @@
+# Display name for the portal. Example: Detik.com
+name: Liputan6
+
+# Unique, lowercase, URL safe slug. Example: detikcom
+slug: liputan6
+
+# Main site of this portal. Example: http://www.detik.com
+site_url: http://www.liputan6.com/
+
+# Hosts containing articles of this portal. May add more if necessary.
+# Leave out the protocol (http/https). Example valid host:
+#   news.detik.com, finance.detik.com, etc.
+hosts:
+  - news.liputan6.com
+  - bisnis.liputan6.com
+  - pilkada.liputan6.com
+  - showbiz.liputan6.com
+  - bola.liputan6.com
+  - tekno.liputan6.com
+  - otomotif.liputan6.com
+  - properti.liputan6.com
+  - lifestyle.liputan6.com
+  - global.liputan6.com
+  - citizen6.liputan6.com
+  - regional.liputan6.com
+  - health.liputan6.com
+  - m.liputan6.com
