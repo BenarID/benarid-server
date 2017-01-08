@@ -14,8 +14,8 @@ defmodule BenarID.Web.APIControllerTest do
   @article_url "https://news.detik.com/internasional/3377369/usai-penangkapan-teroris-di-tangsel-australia-imbau-warganya-waspada"
   @member %{name: "Kairi", email: "kairi@email.com"}
   @ratings [
-    %{slug: "rating-1", label: "Rating 1"},
-    %{slug: "rating-2", label: "Rating 2"},
+    %{slug: "rating-1", label: "Rating 1", question: "Rating 1?"},
+    %{slug: "rating-2", label: "Rating 2", question: "Rating 2?"},
   ]
 
   setup %{conn: conn} do
@@ -70,6 +70,7 @@ defmodule BenarID.Web.APIControllerTest do
       "id" => rating_id,
       "slug" => rating.slug,
       "label" => rating.label,
+      "question" => rating.question,
       "sum" => 0,
       "count" => 0,
     }
