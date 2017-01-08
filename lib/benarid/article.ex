@@ -73,7 +73,6 @@ defmodule BenarID.Article do
       {:ok, article_stats} ->
         article_stats =
           article_stats
-          |> Map.put(:id, article_id)
           |> Map.put(:rated, rated?(article_id, member_id))
         {:ok, article_stats}
       :error ->
@@ -98,7 +97,7 @@ defmodule BenarID.Article do
       nil ->
         :error
       rows ->
-        {:ok, %{rating: rows}}
+        {:ok, %{rating: rows, id: article_id}}
     end
   end
 
