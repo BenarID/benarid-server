@@ -31,6 +31,7 @@ defmodule BenarID.Web do
       use Phoenix.Controller, namespace: BenarID
 
       import BenarID.Web.Router.Helpers
+      import BenarID.Web.Gettext
     end
   end
 
@@ -41,7 +42,12 @@ defmodule BenarID.Web do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
 
+      # Use all HTML functionality (forms, tags, etc)
+      use Phoenix.HTML
+
       import BenarID.Web.Router.Helpers
+      import BenarID.Web.ErrorHelpers
+      import BenarID.Web.Gettext
     end
   end
 
@@ -51,11 +57,13 @@ defmodule BenarID.Web do
     end
   end
 
-  # def channel do
-  #   quote do
-  #     use Phoenix.Channel
-  #   end
-  # end
+  def channel do
+    quote do
+      use Phoenix.Channel
+
+      import BenarID.Web.Gettext
+    end
+  end
 
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
