@@ -3,6 +3,10 @@ defmodule BenarID.Web.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
   end
 
   pipeline :api do
@@ -14,6 +18,12 @@ defmodule BenarID.Web.Router do
   pipeline :protected do
     plug PhoenixTokenPlug.EnsureAuthenticated,
       handler: BenarID.Web.AuthController
+  end
+
+  scope "/", BenarID.Web do
+    pipe_through :browser
+
+    get "/", PageController, :index
   end
 
   scope "/api", BenarID.Web do
