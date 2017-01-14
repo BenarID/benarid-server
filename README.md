@@ -1,5 +1,7 @@
 # BenarID
 
+[![Build Status](https://travis-ci.org/BenarID/benarid-server.svg?branch=master)](https://travis-ci.org/BenarID/benarid-server)
+
 BenarID is a crowdsourced, collaborative Indonesian news rating app.
 
 This is the repo for the server component for the API and website.
