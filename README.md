@@ -34,13 +34,15 @@ Make sure you have these installed:
 
   * [Elixir](http://elixir-lang.org/install.html) >= 1.3.4
   * [PostgreSQL](https://www.postgresql.org/download/) >= 9.6
+  * [Node.js](https://nodejs.org/en/) >= 6.9.1
+  * [Yarn package manager](https://yarnpkg.com/en/docs/install)
 
 To setup your dev environment:
 
   * Clone this repo and cd into the directory
   * `cp .env.example .env` and fill out the details.
   * Export the env variables with `export $(cat .env | xargs)`
-  * Install dependencies with `mix deps.get`
+  * Install dependencies with `mix deps.get` and `yarn`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Setup the data with `mix do benarid.portal.sync --all, benarid.rating.sync`
   * Start the server with `mix phoenix.server`
