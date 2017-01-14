@@ -10,7 +10,20 @@ config :benarid, BenarID.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: []
+  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
+                    cd: Path.expand("../", __DIR__)]]
+
+
+# Watch static and templates for browser reloading.
+config :benarid, BenarID.Endpoint,
+  live_reload: [
+    patterns: [
+      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/gettext/.*(po)$},
+      ~r{web/views/.*(ex)$},
+      ~r{web/templates/.*(eex)$}
+    ]
+  ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

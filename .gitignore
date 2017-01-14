@@ -18,3 +18,7 @@ erl_crash.dump
 
 # Ignore environment variables
 .env
+
+# Ignore phoenix static files
+/node_modules
+/priv/static
