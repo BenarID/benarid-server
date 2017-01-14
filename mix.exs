@@ -6,7 +6,7 @@ defmodule BenarID.Mixfile do
      version: "0.1.0",
      elixir: "~> 1.3",
      elixirc_paths: elixirc_paths(Mix.env),
-     compilers: [:phoenix] ++ Mix.compilers,
+     compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
@@ -33,12 +33,15 @@ defmodule BenarID.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
+     {:phoenix_html, "~> 2.6"},
+     {:gettext, "~> 0.11"},
+     {:cowboy, "~> 1.0"},
      {:phoenix_token_plug, "~> 0.2"},
      {:ueberauth_google, "~> 0.4"},
-     {:cowboy, "~> 1.0"},
      {:yaml_elixir, "~> 1.2"},
 
      # Dev and test dependencies
+     {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:credo, "~> 0.5", only: [:dev, :test], runtime: false}]
   end
 
