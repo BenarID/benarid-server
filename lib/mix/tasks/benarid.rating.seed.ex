@@ -27,7 +27,7 @@ defmodule Mix.Tasks.Benarid.Rating.Seed do
       {[], [], _} ->
         Mix.raise "expected benarid.rating.seed to receive article url."
       {_, [url], _} ->
-        {:ok, article_stats} = BenarID.process_url(url, nil)
+        {:ok, article_stats} = BenarID.Article.process_url(url, nil)
         members = Repo.all(from q in Member, where: like(q.email, "dummymember%"))
         ratings = Repo.all(Rating)
         for member <- members do
@@ -46,7 +46,7 @@ defmodule Mix.Tasks.Benarid.Rating.Seed do
         {rating.id, 1}
       end
     end
-    BenarID.rate_article(seed_rating, member.id, article_id)
+    BenarID.Rating.rate_article(seed_rating, member.id, article_id)
   end
 
 end

@@ -1,8 +1,14 @@
 defmodule BenarID.Web.APIController do
   use BenarID.Web, :controller
 
+  alias BenarID.{
+    Article,
+    Member,
+    Rating,
+  }
+
   def me(conn, _params) do
-    {:found, member} = BenarID.find_member_by_id(conn.assigns.user.id)
+    {:found, member} = Member.find_by_id(conn.assigns.user.id)
     conn |> json(%{id: member.id, name: member.name})
   end
 
@@ -10,7 +16,7 @@ defmodule BenarID.Web.APIController do
     member_id = if conn.assigns[:user] do
       conn.assigns.user.id
     end
-    case BenarID.process_url(url, member_id) do
+    case Article.process_url(url, member_id) do
       {:ok, article_stats} ->
         conn |> json(article_stats)
       {:error, :not_found} ->
@@ -23,7 +29,7 @@ defmodule BenarID.Web.APIController do
   def rate(conn, %{"article_id" => article_id, "ratings" => ratings}) do
     member_id = conn.assigns.user.id
     ratings = ratings |> Enum.into([])
-    case BenarID.rate_article(ratings, member_id, article_id) do
+    case Rating.rate_article(ratings, member_id, article_id) do
       :ok ->
         conn |> json(%{ok: true})
       {:error, :not_found} ->
