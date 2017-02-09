@@ -5,6 +5,7 @@ defmodule BenarID.Web.APIController do
     Article,
     Member,
     Rating,
+    Portal,
   }
 
   def me(conn, _params) do
@@ -39,6 +40,11 @@ defmodule BenarID.Web.APIController do
       {:error, :invalid_value} ->
         conn |> put_status(:unprocessable_entity) |> json(%{message: "Rating yang diberikan invalid."})
     end
+  end
+
+  def portals(conn, _params) do
+    portals = Portal.find_all
+    conn |> json(portals)
   end
 
 end

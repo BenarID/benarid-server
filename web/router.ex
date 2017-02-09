@@ -33,6 +33,7 @@ defmodule BenarID.Web.Router do
 
     post "/process", APIController, :process
     get "/stats", APIController, :stats
+    get "/portals", APIController, :portals
   end
 
   scope "/api", BenarID.Web do

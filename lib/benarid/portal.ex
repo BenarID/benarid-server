@@ -42,6 +42,14 @@ defmodule BenarID.Portal do
     end
   end
 
+  def find_all do
+    Portal
+    |> Repo.all
+    |> Enum.map(fn portal ->
+      Map.take portal, [:slug, :name, :site_url]
+    end)
+  end
+
   def find_by_host(host) do
     query = from p in Portal,
       left_join: h in PortalHost, on: h.portal_id == p.id,

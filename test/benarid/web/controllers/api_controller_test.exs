@@ -82,6 +82,16 @@ defmodule BenarID.Web.APIControllerTest do
     assert json_response(conn, 200)["rated"] == false
   end
 
+  ## /portals tests
+
+  test "/portals: should return registered portals", %{conn: conn} do
+    # Our APIs return JSON with string keys
+    portal_with_string_keys =
+      for {key, val} <- @portal, into: %{}, do: {Atom.to_string(key), val}
+    conn = get conn, api_path(conn, :portals)
+    assert json_response(conn, 200) == [portal_with_string_keys]
+  end
+
   ## /me tests
 
   test "/me: should give name of authenticated member", %{conn: conn, data: data} do
