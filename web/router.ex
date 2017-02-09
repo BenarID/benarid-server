@@ -32,7 +32,6 @@ defmodule BenarID.Web.Router do
     get "/", IndexController, :index
 
     post "/process", APIController, :process
-    get "/stats", APIController, :stats
     get "/portals", APIController, :portals
   end
 
