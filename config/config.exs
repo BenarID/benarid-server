@@ -22,10 +22,7 @@ config :benarid, BenarID.Endpoint,
 # Configure your database
 config :benarid, BenarID.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("DB_USERNAME"),
-  password: System.get_env("DB_PASSWORD"),
-  database: System.get_env("DB_NAME"),
-  hostname: System.get_env("DB_HOST")
+  url: System.get_env("DATABASE_URL")
 
 # Configure Ueberauth
 config :ueberauth, Ueberauth,

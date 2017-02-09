@@ -23,7 +23,7 @@ config :phoenix, :serve_endpoints, true
 
 # Configure production database
 config :benarid, BenarID.Repo,
-  pool_size: 20
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "20")
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.

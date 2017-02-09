@@ -11,5 +11,5 @@ config :logger, level: :warn
 
 # Configure your database
 config :benarid, BenarID.Repo,
-  database: "#{System.get_env("DB_NAME")}_test",
+  url: "#{System.get_env("DATABASE_URL")}_test",
   pool: Ecto.Adapters.SQL.Sandbox
