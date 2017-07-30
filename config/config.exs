@@ -11,11 +11,11 @@ config :benarid,
   ecto_repos: [BenarID.Repo]
 
 # Configures the endpoint
-config :benarid, BenarID.Endpoint,
+config :benarid, BenarIDWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "localhost"],
   secret_key_base: "p5f1dgYbrl2JzHic65vFjdT8k/4C2Z/Hoyy8eVmej3jruSFV0BonJZcbF11V+3RR",
-  render_errors: [view: BenarID.Web.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: BenarIDWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: BenarID.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

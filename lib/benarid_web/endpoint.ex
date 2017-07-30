@@ -1,7 +1,7 @@
-defmodule BenarID.Endpoint do
+defmodule BenarIDWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :benarid
 
-  socket "/socket", BenarID.UserSocket
+  socket "/socket", BenarIDWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -38,5 +38,5 @@ defmodule BenarID.Endpoint do
     key: "_benarid_key",
     signing_salt: "EWVlckHD"
 
-  plug BenarID.Web.Router
+  plug BenarIDWeb.Router
 end

@@ -1,4 +1,4 @@
-defmodule BenarID.Web.ModelCase do
+defmodule BenarID.DataCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -21,7 +21,7 @@ defmodule BenarID.Web.ModelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import BenarID.ModelCase
+      import BenarID.DataCase
     end
   end
 

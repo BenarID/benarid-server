@@ -1,12 +1,12 @@
-defmodule BenarID.Web do
+defmodule BenarIDWeb do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use BenarID.Web, :controller
-      use BenarID.Web, :view
+      use BenarIDWeb, :controller
+      use BenarIDWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -28,16 +28,17 @@ defmodule BenarID.Web do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: BenarID.Web
+      use Phoenix.Controller, namespace: BenarIDWeb
 
-      import BenarID.Web.Router.Helpers
-      import BenarID.Web.Gettext
+      import BenarIDWeb.Router.Helpers
+      import BenarIDWeb.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates", namespace: BenarID.Web
+      use Phoenix.View, root: "lib/benarid_web/templates",
+                        namespace: BenarIDWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -45,9 +46,9 @@ defmodule BenarID.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import BenarID.Web.Router.Helpers
-      import BenarID.Web.ErrorHelpers
-      import BenarID.Web.Gettext
+      import BenarIDWeb.Router.Helpers
+      import BenarIDWeb.ErrorHelpers
+      import BenarIDWeb.Gettext
     end
   end
 
@@ -61,7 +62,7 @@ defmodule BenarID.Web do
     quote do
       use Phoenix.Channel
 
-      import BenarID.Web.Gettext
+      import BenarIDWeb.Gettext
     end
   end
 

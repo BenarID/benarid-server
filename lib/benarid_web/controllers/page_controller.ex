@@ -1,5 +1,5 @@
-defmodule BenarID.Web.PageController do
-  use BenarID.Web, :controller
+defmodule BenarIDWeb.PageController do
+  use BenarIDWeb, :controller
 
   def index(conn, _params) do
     render conn, "index.html"

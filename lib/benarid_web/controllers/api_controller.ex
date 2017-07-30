@@ -1,5 +1,5 @@
-defmodule BenarID.Web.APIController do
-  use BenarID.Web, :controller
+defmodule BenarIDWeb.APIController do
+  use BenarIDWeb, :controller
 
   alias BenarID.{
     Article,

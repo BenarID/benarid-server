@@ -1,4 +1,4 @@
-defmodule BenarID.Web.ConnCase do
+defmodule BenarIDWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -21,24 +21,19 @@ defmodule BenarID.Web.ConnCase do
       use Phoenix.ConnTest
 
       alias BenarID.Repo
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
 
-      import BenarID.Web.Router.Helpers
+      import BenarIDWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint BenarID.Endpoint
+      @endpoint BenarIDWeb.Endpoint
     end
   end
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(BenarID.Repo)
-
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(BenarID.Repo, {:shared, self()})
     end
-
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

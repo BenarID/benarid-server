@@ -1,5 +1,5 @@
-defmodule BenarID.Web.ErrorView do
-  use BenarID.Web, :view
+defmodule BenarIDWeb.ErrorView do
+  use BenarIDWeb, :view
 
   def render("404.json", _assigns) do
     %{errors: %{detail: "Page not found"}}

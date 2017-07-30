@@ -1,4 +1,4 @@
-defmodule MemberSchemaTest do
+defmodule BenarID.MemberSchemaTest do
   use ExUnit.Case
 
   alias BenarID.Schema.Member

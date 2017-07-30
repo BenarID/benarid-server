@@ -1,5 +1,5 @@
-defmodule BenarID.Web.Router do
-  use BenarID.Web, :router
+defmodule BenarIDWeb.Router do
+  use BenarIDWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,16 +17,16 @@ defmodule BenarID.Web.Router do
 
   pipeline :protected do
     plug PhoenixTokenPlug.EnsureAuthenticated,
-      handler: BenarID.Web.AuthController
+      handler: BenarIDWeb.AuthController
   end
 
-  scope "/", BenarID.Web do
+  scope "/", BenarIDWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  scope "/api", BenarID.Web do
+  scope "/api", BenarIDWeb do
     pipe_through :api
 
     get "/", IndexController, :index
@@ -35,14 +35,14 @@ defmodule BenarID.Web.Router do
     get "/portals", APIController, :portals
   end
 
-  scope "/api", BenarID.Web do
+  scope "/api", BenarIDWeb do
     pipe_through [:api, :protected]
 
     get "/me", APIController, :me
     post "/rate", APIController, :rate
   end
 
-  scope "/auth", BenarID.Web do
+  scope "/auth", BenarIDWeb do
     pipe_through :browser
 
     get "/retrieve", AuthController, :retrieve

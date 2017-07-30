@@ -1,4 +1,4 @@
-defmodule BenarID.Web.ErrorHelpers do
+defmodule BenarIDWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule BenarID.Web.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(BenarID.Web.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(BenarIDWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(BenarID.Web.Gettext, "errors", msg, opts)
+      Gettext.dgettext(BenarIDWeb.Gettext, "errors", msg, opts)
     end
   end
 end

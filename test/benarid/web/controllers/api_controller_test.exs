@@ -1,5 +1,5 @@
-defmodule BenarID.Web.APIControllerTest do
-  use BenarID.Web.ConnCase, async: true
+defmodule BenarIDWeb.APIControllerTest do
+  use BenarIDWeb.ConnCase, async: true
 
   alias BenarID.Schema.{
     Article,

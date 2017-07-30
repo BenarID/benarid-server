@@ -1,4 +1,4 @@
-defmodule BenarID.Web.ChannelCase do
+defmodule BenarIDWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,23 +20,16 @@ defmodule BenarID.Web.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias BenarID.Repo
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-
       # The default endpoint for testing
-      @endpoint BenarID.Endpoint
+      @endpoint BenarIDWeb.Endpoint
     end
   end
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(BenarID.Repo)
-
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(BenarID.Repo, {:shared, self()})
     end
-
     :ok
   end
 end
