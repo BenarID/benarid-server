@@ -4,6 +4,7 @@ defmodule BenarIDWeb.AuthController do
   plug Ueberauth
 
   alias BenarID.Member
+  alias BenarID.Auth
 
   @doc """
   Callback for failed authentication.
@@ -68,6 +69,13 @@ defmodule BenarIDWeb.AuthController do
 
   defp extract_avatar(auth) do
     auth.info.image
+  end
+
+  @doc """
+  Handler for checking blacklisted token.
+  """
+  def not_blacklisted?(_conn, token, _params) do
+    not Auth.blacklisted?(token)
   end
 
 end

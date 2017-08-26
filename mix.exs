@@ -36,7 +36,7 @@ defmodule BenarID.Mixfile do
      {:phoenix_html, "~> 2.6"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:phoenix_token_plug, "~> 0.2"},
+     {:phoenix_token_plug, "~> 0.3"},
      {:ueberauth_google, "~> 0.4"},
      {:yaml_elixir, "~> 1.2"},
 
