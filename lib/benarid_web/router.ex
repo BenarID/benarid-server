@@ -1,6 +1,8 @@
 defmodule BenarIDWeb.Router do
   use BenarIDWeb, :router
 
+  import BenarIDWeb.Plugs
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -18,6 +20,7 @@ defmodule BenarIDWeb.Router do
   pipeline :protected do
     plug PhoenixTokenPlug.EnsureAuthenticated,
       handler: BenarIDWeb.AuthController
+    plug :check_blacklisted_token
   end
 
   scope "/", BenarIDWeb do
@@ -40,6 +43,7 @@ defmodule BenarIDWeb.Router do
 
     get "/me", APIController, :me
     post "/rate", APIController, :rate
+    post "/logout", APIController, :logout
   end
 
   scope "/auth", BenarIDWeb do

@@ -2,11 +2,13 @@ defmodule BenarIDWeb.APIController do
   use BenarIDWeb, :controller
 
   alias BenarID.{
+    Auth,
     Article,
     Member,
     Rating,
     Portal,
   }
+  alias BenarIDWeb.TokenHelper
 
   def me(conn, _params) do
     {:found, member} = Member.find_by_id(conn.assigns.user.id)
@@ -45,6 +47,16 @@ defmodule BenarIDWeb.APIController do
   def portals(conn, _params) do
     portals = Portal.find_all
     conn |> json(portals)
+  end
+
+  def logout(conn, _params) do
+    token = conn |> get_req_header("authorization") |> TokenHelper.fetch_token_from_headers
+    case Auth.blacklist_token(token) do
+      :ok ->
+        conn |> json(%{ok: true})
+      {:error, _changeset} ->
+        conn |> put_status(:unprocessable_entity) |> json(%{message: "Gagal melakukan logout. Coba beberapa saat lagi."})
+    end
   end
 
 end
