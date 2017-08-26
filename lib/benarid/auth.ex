@@ -1,0 +1,31 @@
+defmodule BenarID.Auth do
+  @moduledoc false
+
+  import Ecto.Query
+
+  alias BenarID.Repo
+  alias BenarID.Schema.TokenBlacklist
+
+  def blacklist_token(token) do
+    changeset = TokenBlacklist.changeset(%TokenBlacklist{}, %{token: token})
+
+    case Repo.insert(changeset) do
+      {:ok, _entry} ->
+        :ok
+      {:error, _} ->
+        {:error, changeset.errors}
+    end
+  end
+
+  def blacklisted?(nil), do: false
+  def blacklisted?(token) do
+    query = from t in TokenBlacklist, where: t.token == ^token
+
+    case Repo.one(query) do
+      nil ->
+        false
+      _ ->
+        true
+    end
+  end
+end
