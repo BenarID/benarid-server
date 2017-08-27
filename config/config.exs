@@ -8,7 +8,8 @@ use Mix.Config
 # General application configuration
 config :benarid,
   namespace: BenarID,
-  ecto_repos: [BenarID.Repo]
+  ecto_repos: [BenarID.Repo],
+  token_clearance_period: 1 * 60 * 60 * 1000 # every one hour
 
 # Configures the endpoint
 config :benarid, BenarIDWeb.Endpoint,
@@ -18,7 +19,7 @@ config :benarid, BenarIDWeb.Endpoint,
   render_errors: [view: BenarIDWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: BenarID.PubSub,
            adapter: Phoenix.PubSub.PG2],
-  token_max_age: 1_209_600 # two weeks
+  token_max_age: 2 * 7 * 24 * 60 * 60 # two weeks
 
 # Configure your database
 config :benarid, BenarID.Repo,

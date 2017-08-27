@@ -32,4 +32,12 @@ defmodule BenarID.Auth do
         true
     end
   end
+
+  def clear_expired_token_from_blacklist do
+    timestamp = System.system_time(:seconds)
+    query = from t in TokenBlacklist, where: t.expire_at <= ^timestamp
+
+    {delete_count, _} = Repo.delete_all(query)
+    {:ok, delete_count}
+  end
 end

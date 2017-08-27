@@ -18,6 +18,7 @@ defmodule BenarID.Application do
       supervisor(BenarIDWeb.Endpoint, []),
       # Start your own worker by calling: BenarID.Worker.start_link(arg1, arg2, arg3)
       # worker(BenarID.Worker, [arg1, arg2, arg3]),
+      worker(BenarID.BlacklistClearanceScheduler, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
