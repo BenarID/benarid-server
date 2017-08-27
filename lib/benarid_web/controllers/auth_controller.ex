@@ -6,6 +6,8 @@ defmodule BenarIDWeb.AuthController do
   alias BenarID.Member
   alias BenarID.Auth
 
+  @token_max_age Application.get_env(:benarid, BenarIDWeb.Endpoint)[:token_max_age]
+
   @doc """
   Callback for failed authentication.
   """
@@ -27,7 +29,11 @@ defmodule BenarIDWeb.AuthController do
         member
     end
 
-    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", %{id: member.id})
+    token_payload = %{
+      id: member.id,
+      expire_at: System.system_time(:seconds) + @token_max_age,
+    }
+    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", token_payload)
 
     redirect conn, to: "/auth/retrieve#token=#{token}"
   end

@@ -17,7 +17,8 @@ config :benarid, BenarIDWeb.Endpoint,
   secret_key_base: "p5f1dgYbrl2JzHic65vFjdT8k/4C2Z/Hoyy8eVmej3jruSFV0BonJZcbF11V+3RR",
   render_errors: [view: BenarIDWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: BenarID.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  token_max_age: 1_209_600 # two weeks
 
 # Configure your database
 config :benarid, BenarID.Repo,

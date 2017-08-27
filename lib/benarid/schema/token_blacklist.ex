@@ -8,6 +8,7 @@ defmodule BenarID.Schema.TokenBlacklist do
   @primary_key false
   schema "token_blacklist" do
     field :token, :string, primary_key: true
+    field :expire_at, :integer
   end
 
   @doc """
@@ -15,8 +16,8 @@ defmodule BenarID.Schema.TokenBlacklist do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:token])
-    |> validate_required([:token])
+    |> cast(params, [:token, :expire_at])
+    |> validate_required([:token, :expire_at])
     |> unique_constraint(:token)
   end
 end

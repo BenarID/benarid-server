@@ -6,8 +6,12 @@ defmodule BenarID.Auth do
   alias BenarID.Repo
   alias BenarID.Schema.TokenBlacklist
 
-  def blacklist_token(token) do
-    changeset = TokenBlacklist.changeset(%TokenBlacklist{}, %{token: token})
+  def blacklist_token(nil, _), do: {:error, :invalid_token}
+  def blacklist_token(token, expire_at) do
+    changeset = TokenBlacklist.changeset(%TokenBlacklist{}, %{
+      token: token,
+      expire_at: expire_at,
+    })
 
     case Repo.insert(changeset) do
       {:ok, _entry} ->

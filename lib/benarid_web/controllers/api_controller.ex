@@ -8,7 +8,6 @@ defmodule BenarIDWeb.APIController do
     Rating,
     Portal,
   }
-  alias BenarIDWeb.TokenHelper
 
   def me(conn, _params) do
     {:found, member} = Member.find_by_id(conn.assigns.user.id)
@@ -50,8 +49,7 @@ defmodule BenarIDWeb.APIController do
   end
 
   def logout(conn, _params) do
-    token = conn |> get_req_header("authorization") |> TokenHelper.fetch_token_from_headers
-    case Auth.blacklist_token(token) do
+    case Auth.blacklist_token(conn.assigns.token, conn.assigns.user.expire_at) do
       :ok ->
         conn |> json(%{ok: true})
       {:error, _changeset} ->

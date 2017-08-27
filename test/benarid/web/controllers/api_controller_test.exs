@@ -18,12 +18,16 @@ defmodule BenarIDWeb.APIControllerTest do
     %{slug: "rating-1", label: "Rating 1", question: "Rating 1?"},
     %{slug: "rating-2", label: "Rating 2", question: "Rating 2?"},
   ]
+  @token_age Application.get_env(:benarid, BenarIDWeb.Endpoint)[:token_max_age]
 
   setup %{conn: conn} do
     portal = Repo.insert! Portal.changeset(%Portal{}, @portal)
     _portal_host = Repo.insert! PortalHost.changeset(%PortalHost{}, Map.put(@portal_hosts, :portal_id, portal.id))
     member = Repo.insert! Member.changeset(%Member{}, @member)
-    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", %{id: member.id})
+    token = Phoenix.Token.sign(BenarIDWeb.Endpoint, "member", %{
+      id: member.id,
+      expire_at: System.system_time(:seconds) + @token_age,
+    })
     data = %{portal: portal, member: member, token: token}
     {:ok, conn: put_req_header(conn, "accept", "application/json"), data: data}
   end
@@ -243,8 +247,6 @@ defmodule BenarIDWeb.APIControllerTest do
   ## helper functions
 
   defp authenticate(conn, data) do
-    conn
-    |> assign(:user, %{id: data.member.id})
-    |> put_req_header("authorization", "Bearer " <> data.token)
+    conn |> put_req_header("authorization", "Bearer " <> data.token)
   end
 end

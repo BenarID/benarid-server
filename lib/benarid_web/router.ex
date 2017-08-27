@@ -12,7 +12,8 @@ defmodule BenarIDWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
     plug PhoenixTokenPlug.VerifyHeader,
-      salt: "member"
+      salt: "member",
+      max_age: Application.get_env(:benarid, BenarIDWeb.Endpoint)[:token_max_age]
   end
 
   pipeline :protected do
