@@ -20,7 +20,7 @@ services:
     links:
       - db
   db:
-    image: postgres
+    image: postgres:alpine
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=benarid
